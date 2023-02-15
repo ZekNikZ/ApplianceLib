@@ -136,18 +136,37 @@ namespace ApplianceLib.Api
                 )
             }
         };
+
         private static readonly Dictionary<ApplianceGroup, List<Appliance.ApplianceProcesses>> Processes = new();
 
+        /// <summary>
+        /// Add a custom appliance to a pre-defined appliance group.
+        /// Note: call this in your mod's PostActivate, NOT BuildGameDataEvent.
+        /// </summary>
+        /// <param name="group">The group to add to.</param>
+        /// <param name="appliance">The appliance to add.</param>
         public static void AddApplianceToGroup(ApplianceGroup group, CustomAppliance appliance)
         {
             AddApplianceToGroup(group, appliance.GameDataObject as Appliance);
         }
 
+        /// <summary>
+        /// Add a custom appliance to a pre-defined appliance group.
+        /// Note: call this in your mod's PostActivate, NOT BuildGameDataEvent.
+        /// </summary>
+        /// <param name="group">The group to add to.</param>
+        /// <param name="appliance">The appliance to add.</param>
         public static void AddApplianceToGroup(ApplianceGroup group, Appliance appliance)
         {
             Appliances[group].Add(appliance);
         }
 
+        /// <summary>
+        /// Adds an appliance process to every appliance in a specified appliance group.
+        /// Note: call this in your mod's PostActivate, NOT BuildGameDataEvent.
+        /// </summary>
+        /// <param name="group">The group to modify.</param>
+        /// <param name="applianceProcess">The process to add.</param>
         public static void AddProcessToGroup(ApplianceGroup group, Appliance.ApplianceProcesses applianceProcess)
         {
             if (!Processes.ContainsKey(group))
