@@ -8,13 +8,12 @@ using Unity.Entities;
 namespace ApplianceLib.Customs
 {
     [HarmonyPatch(typeof(ApplyItemProcesses), "Run")]
-    public class ApplyItemProcessesRunPatch
+    internal class ApplyItemProcessesRunPatch
     {
         internal static Entity ApplianceEntity;
         internal static EntityManager EntityManager;
 
-        [HarmonyPrefix]
-        static bool Prefix(Entity e, CItem item, ApplyItemProcesses __instance)
+        static bool Prefix(Entity e, ApplyItemProcesses __instance)
         {
             EntityManager = __instance.EntityManager;
 
@@ -36,9 +35,8 @@ namespace ApplianceLib.Customs
     }
 
     [HarmonyPatch(typeof(ProcessesView), "GetRelevantProcess")]
-    public class ProcessesViewGetRelevantProcessPatch
+    internal class ProcessesViewGetRelevantProcessPatch
     {
-        [HarmonyPrefix]
         static bool Prefix(int item, int appliance, out ApplianceProcessPair process, ref bool __result)
         {
             if (ApplyItemProcessesRunPatch.EntityManager.RequireComponent(ApplyItemProcessesRunPatch.ApplianceEntity, out CVariableProcessContainer variableProcessContainer))
