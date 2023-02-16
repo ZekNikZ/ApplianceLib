@@ -35,7 +35,8 @@ namespace ApplianceLib.Appliances.Blender
             new CRestrictedReceiver
             {
                 ApplianceKey = RestrictedTransferKeys.Blender
-            }
+            },
+            new CPreventUseWhenEmpty()
         };
         public override List<Appliance.ApplianceProcesses> Processes => new()
         {
