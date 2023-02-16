@@ -5,7 +5,7 @@ using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
-namespace ApplianceLib.Customs
+namespace ApplianceLib.Api
 {
     public class VariableProcessView : UpdatableObjectView<VariableProcessView.ViewData>
     {

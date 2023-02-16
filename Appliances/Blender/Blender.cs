@@ -5,6 +5,7 @@ using KitchenData;
 using KitchenLib.Utils;
 using System.Collections.Generic;
 using UnityEngine;
+using ApplianceLib.Api;
 
 namespace ApplianceLib.Appliances.Blender
 {
@@ -31,6 +32,10 @@ namespace ApplianceLib.Appliances.Blender
                 AllowWhenActive = false,
                 AllowWhenInactive = true
             },
+            new CRestrictedReceiver
+            {
+                ApplianceKey = RestrictedTransferKeys.Blender
+            }
         };
         public override List<Appliance.ApplianceProcesses> Processes => new()
         {

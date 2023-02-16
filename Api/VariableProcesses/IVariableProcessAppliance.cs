@@ -1,7 +1,7 @@
 ﻿using KitchenData;
 using System.Collections.Generic;
 
-namespace ApplianceLib.Customs
+namespace ApplianceLib.Api
 {
     public interface IVariableProcessAppliance
     {

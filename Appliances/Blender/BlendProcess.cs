@@ -1,4 +1,5 @@
-﻿using ApplianceLib.Customs;
+﻿using ApplianceLib.Api;
+using ApplianceLib.Customs;
 using KitchenData;
 using KitchenLib.Utils;
 using System.Collections.Generic;
@@ -15,5 +16,10 @@ namespace ApplianceLib.Appliances.Blender
         {
             (Locale.English, LocalisationUtils.CreateProcessInfo("Blend", "<sprite name=\"knead\">"))
         };
+
+        protected override void Modify(Process process)
+        {
+            RestrictedItemTransfers.AllowProcessableItems(RestrictedTransferKeys.Blender, process);
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using KitchenData;
 using KitchenMods;
 
-namespace ApplianceLib.Customs
+namespace ApplianceLib.Api
 {
     public struct CVariableProcessContainer : IApplianceProperty, IModComponent
     {

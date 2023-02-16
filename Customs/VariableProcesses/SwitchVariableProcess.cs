@@ -1,6 +1,6 @@
-﻿using Kitchen;
+﻿using ApplianceLib.Api;
+using Kitchen;
 using KitchenMods;
-using System;
 using Unity.Entities;
 
 namespace ApplianceLib.Customs
@@ -24,8 +24,6 @@ namespace ApplianceLib.Customs
 
         protected override void Perform(ref InteractionData data)
         {
-            var target = Tuple.Create(data.Target.Index, data.Target.Version);
-
             if (Require<CItemHolder>(data.Target, out var holder) && holder.HeldItem == default)
             {
                 VariableProcessContainer.Current = (VariableProcessContainer.Current + 1) % VariableProcessContainer.Max;

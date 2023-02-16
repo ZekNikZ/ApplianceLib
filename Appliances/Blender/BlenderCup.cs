@@ -1,5 +1,7 @@
-﻿using ApplianceLib.Customs;
+﻿using ApplianceLib.Api;
+using ApplianceLib.Customs;
 using ApplianceLib.Util;
+using KitchenData;
 using UnityEngine;
 
 namespace ApplianceLib.Appliances.Blender
@@ -13,6 +15,11 @@ namespace ApplianceLib.Appliances.Blender
         protected override void SetupPrefab(GameObject prefab)
         {
             prefab.ApplyMaterialToChild("Cup", MaterialHelpers.GetMaterialArray("Door Glass", "Door Glass", "Door Glass"));
+        }
+
+        protected override void Modify(Item item)
+        {
+            RestrictedItemTransfers.AllowItem(RestrictedTransferKeys.Blender, item);
         }
     }
 }
