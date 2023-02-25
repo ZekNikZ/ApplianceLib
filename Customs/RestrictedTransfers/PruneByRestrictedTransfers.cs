@@ -1,5 +1,6 @@
 ﻿using ApplianceLib.Api;
 using Kitchen;
+using KitchenData;
 using KitchenLib.Customs;
 using KitchenMods;
 using Unity.Collections;
@@ -41,7 +42,7 @@ namespace ApplianceLib.Customs
 
                 if (Require(proposal.Destination, out CRestrictedReceiver reciever) && Require(proposal.Destination, out CAppliance appliance))
                 {
-                    if (CustomGDO.GDOs.TryGetValue(appliance.ID, out var customAppliance))
+                    if (GameData.Main.TryGet<Appliance>(appliance.ID, out var _))
                     {
                         string applianceKey = reciever.ApplianceKey.ConvertToString();
                         if (!RestrictedItemTransfers.IsAllowed(applianceKey, proposal.ItemType))

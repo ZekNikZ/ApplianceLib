@@ -7,6 +7,7 @@ using UnityEngine;
 using ApplianceLib.Customs.GDO;
 using ApplianceLib.Api.References;
 using static ApplianceLib.Api.References.ApplianceLibGDOs;
+using ApplianceLib.Api;
 
 namespace ApplianceLib.Appliances.MixingBowl
 {
@@ -25,7 +26,11 @@ namespace ApplianceLib.Appliances.MixingBowl
         public override List<IApplianceProperty> Properties => new()
         {
             new CItemHolder(),
-            KitchenPropertiesUtils.GetCItemProvider(Refs.MixingBowl.ID, 1, 1, false, false, true, false, false, true, false)
+            KitchenPropertiesUtils.GetCItemProvider(Refs.MixingBowl.ID, 1, 1, false, false, true, false, false, true, false),
+            new CRestrictedSplitter
+            {
+                ApplianceKey = "test"
+            }
         };
 
         protected override void SetupPrefab(GameObject prefab)

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ApplianceLib.Api.VariableProvider
 {
-    public class ExpandedVariableProviderView: UpdatableObjectView<ExpandedVariableProviderView.ViewData>
+    public class ExpandedVariableProviderView : UpdatableObjectView<ExpandedVariableProviderView.ViewData>
     {
         [SerializeField]
         public Animator Animator;

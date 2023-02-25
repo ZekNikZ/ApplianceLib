@@ -82,15 +82,22 @@ namespace ApplianceLib
             // Perform actions when game data is built
             Events.BuildGameDataEvent += delegate (object s, BuildGameDataEventArgs args)
             {
-                Item item = (Item)GDOUtils.GetExistingGDO(ItemReferences.Tomato);
-                if (item != null)
+                Item tomato = (Item)GDOUtils.GetExistingGDO(ItemReferences.Tomato);
+                if (tomato != null)
                 {
-                    item.DerivedProcesses.Add(new Item.ItemProcess
+                    tomato.DerivedProcesses.Add(new Item.ItemProcess
                     {
                         Process = Refs.BlendProcess,
                         Duration = 1,
                         Result = (Item)GDOUtils.GetExistingGDO(ItemReferences.TomatoSauce)
                     });
+                }
+
+                Item pizza = (Item)GDOUtils.GetExistingGDO(ItemReferences.PizzaCooked);
+                if (pizza != null)
+                {
+                    RestrictedItemSplits.BlacklistItem(pizza);
+                    RestrictedItemSplits.AllowItem("test", pizza);
                 }
             };
             Events.BuildGameDataEvent += ApplianceGroups.BuildGameDataEventCallback;
