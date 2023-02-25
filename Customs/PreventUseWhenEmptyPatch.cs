@@ -1,8 +1,5 @@
-﻿using ApplianceLib.Api;
-using HarmonyLib;
+﻿using HarmonyLib;
 using Kitchen;
-using KitchenMods;
-using Unity.Collections;
 using Unity.Entities;
 
 namespace ApplianceLib.Customs

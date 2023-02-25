@@ -1,6 +1,6 @@
-﻿namespace ApplianceLib.Customs
+﻿namespace ApplianceLib.Customs.GDO
 {
-    internal interface IModGDO
+    public interface IModGDO
     {
     }
 }

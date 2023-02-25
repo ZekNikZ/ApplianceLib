@@ -1,16 +1,17 @@
 ﻿using Kitchen;
-using ApplianceLib.Customs;
 using ApplianceLib.Util;
 using KitchenData;
 using KitchenLib.Utils;
 using System.Collections.Generic;
 using UnityEngine;
+using ApplianceLib.Customs.GDO;
+using static ApplianceLib.Api.References.ApplianceLibGDOs;
 
 namespace ApplianceLib.Appliances.DeepFryer
 {
     public class DeepFryer : ModAppliance
     {
-        public override string UniqueNameID => "DeepFryerAppliance";
+        public override string UniqueNameID => Ids.DeepFryerAppliance;
         public override GameObject Prefab => Prefabs.Find("DeepFryer");
         public override PriceTier PriceTier => PriceTier.Medium;
         public override bool SellOnlyAsDuplicate => true;

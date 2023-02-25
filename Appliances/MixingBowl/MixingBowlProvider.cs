@@ -1,17 +1,18 @@
 ﻿using Kitchen;
-using ApplianceLib.Customs;
 using ApplianceLib.Util;
 using KitchenData;
 using KitchenLib.Utils;
 using System.Collections.Generic;
 using UnityEngine;
-using ApplianceLib.Api;
+using ApplianceLib.Customs.GDO;
+using ApplianceLib.Api.References;
+using static ApplianceLib.Api.References.ApplianceLibGDOs;
 
 namespace ApplianceLib.Appliances.MixingBowl
 {
     public class MixingBowlProvider : ModAppliance
     {
-        public override string UniqueNameID => "MixingBowlSource";
+        public override string UniqueNameID => Ids.MixingBowlSource;
         public override GameObject Prefab => Prefabs.Find("MixingBowlProvider");
         public override PriceTier PriceTier => PriceTier.Medium;
         public override bool SellOnlyAsDuplicate => true;

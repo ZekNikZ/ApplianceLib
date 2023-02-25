@@ -641,7 +641,7 @@ GameObject:
   - component: {fileID: 8780651665985887057}
   - component: {fileID: 1001830151924610923}
   m_Layer: 0
-  m_Name: Counter
+  m_Name: CounterDoubleDoors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

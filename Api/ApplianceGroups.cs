@@ -141,7 +141,7 @@ namespace ApplianceLib.Api
 
         /// <summary>
         /// Add a custom appliance to a pre-defined appliance group.
-        /// Note: call this in your mod's PostActivate, NOT BuildGameDataEvent.
+        /// Note: call this in your mod's OnPostActivate, NOT BuildGameDataEvent.
         /// </summary>
         /// <param name="group">The group to add to.</param>
         /// <param name="appliance">The appliance to add.</param>
@@ -152,7 +152,7 @@ namespace ApplianceLib.Api
 
         /// <summary>
         /// Add a custom appliance to a pre-defined appliance group.
-        /// Note: call this in your mod's PostActivate, NOT BuildGameDataEvent.
+        /// Note: call this in your mod's OnPostActivate, NOT BuildGameDataEvent.
         /// </summary>
         /// <param name="group">The group to add to.</param>
         /// <param name="appliance">The appliance to add.</param>
@@ -163,7 +163,7 @@ namespace ApplianceLib.Api
 
         /// <summary>
         /// Adds an appliance process to every appliance in a specified appliance group.
-        /// Note: call this in your mod's PostActivate, NOT BuildGameDataEvent.
+        /// Note: call this in your mod's OnPostActivate, NOT BuildGameDataEvent.
         /// </summary>
         /// <param name="group">The group to modify.</param>
         /// <param name="applianceProcess">The process to add.</param>
@@ -175,6 +175,16 @@ namespace ApplianceLib.Api
             }
 
             Processes[group].Add(applianceProcess);
+        }
+
+        /// <summary>
+        /// Gets the list of all appliances part of the given group.
+        /// </summary>
+        /// <param name="group">The group.</param>
+        /// <returns>The list of appliances in that group.</returns>
+        public static List<Appliance> GetAppliancesInGroup(ApplianceGroup group)
+        {
+            return Appliances[group];
         }
 
         internal static void BuildGameDataEventCallback(object sender, BuildGameDataEventArgs args)

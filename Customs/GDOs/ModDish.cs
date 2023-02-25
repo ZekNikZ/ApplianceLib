@@ -1,9 +1,8 @@
 ﻿using KitchenData;
 using KitchenLib.Customs;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace ApplianceLib.Customs
+namespace ApplianceLib.Customs.GDO
 {
     public abstract class ModDish : CustomDish, IModGDO
     {
@@ -33,7 +32,5 @@ namespace ApplianceLib.Customs
         protected virtual void SetupDisplayPrefab(GameObject prefab) { }
 
         protected virtual void Modify(Dish dish) { }
-
-        internal ModDish() { }
     }
 }

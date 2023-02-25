@@ -1,8 +1,7 @@
 ﻿using KitchenData;
 using KitchenLib.Customs;
-using System.Collections.Generic;
 
-namespace ApplianceLib.Customs
+namespace ApplianceLib.Customs.GDO
 {
     public abstract class ModUnlockCard : CustomUnlockCard, IModGDO
     {
@@ -17,7 +16,5 @@ namespace ApplianceLib.Customs
         }
 
         protected virtual void Modify(UnlockCard dish) { }
-
-        internal ModUnlockCard() { }
     }
 }

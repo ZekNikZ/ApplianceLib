@@ -1,7 +1,7 @@
 ﻿using KitchenData;
 using KitchenLib.Customs;
 
-namespace ApplianceLib.Customs
+namespace ApplianceLib.Customs.GDO
 {
     public abstract class ModProcess : CustomProcess, IModGDO
     {
@@ -13,7 +13,5 @@ namespace ApplianceLib.Customs
         }
 
         protected virtual void Modify(Process process) { }
-
-        internal ModProcess () { }
     }
 }

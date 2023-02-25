@@ -1,17 +1,19 @@
 ﻿using Kitchen;
-using ApplianceLib.Customs;
 using ApplianceLib.Util;
 using KitchenData;
 using KitchenLib.Utils;
 using System.Collections.Generic;
 using UnityEngine;
 using ApplianceLib.Api;
+using ApplianceLib.Customs.GDO;
+using ApplianceLib.Api.References;
+using static ApplianceLib.Api.References.ApplianceLibGDOs;
 
 namespace ApplianceLib.Appliances.Blender
 {
     public class Blender : ModAppliance
     {
-        public override string UniqueNameID => "BlenderAppliance";
+        public override string UniqueNameID => Ids.BlenderAppliance;
         public override GameObject Prefab => Prefabs.Find("Blender");
         public override PriceTier PriceTier => PriceTier.Medium;
         public override bool SellOnlyAsDuplicate => true;

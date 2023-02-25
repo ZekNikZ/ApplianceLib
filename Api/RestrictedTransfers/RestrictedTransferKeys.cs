@@ -1,4 +1,4 @@
-﻿namespace ApplianceLib.Api
+﻿namespace ApplianceLib.Api.References
 {
     public class RestrictedTransferKeys
     {

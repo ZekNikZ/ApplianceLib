@@ -8,7 +8,9 @@ using KitchenLib.Utils;
 using KitchenMods;
 using System.Linq;
 using System.Reflection;
+using TMPro;
 using UnityEngine;
+using static ApplianceLib.Api.References.ApplianceLibGDOs;
 
 namespace ApplianceLib
 {
@@ -16,7 +18,7 @@ namespace ApplianceLib
     {
         public const string MOD_GUID = "io.zkz.plateup.appliancelib";
         public const string MOD_NAME = "ApplianceLib";
-        public const string MOD_VERSION = "0.1.0";
+        public const string MOD_VERSION = "0.1.0a";
         public const string MOD_AUTHOR = "ZekNikZ";
         public const string MOD_GAMEVERSION = ">=1.1.3";
 
@@ -39,26 +41,19 @@ namespace ApplianceLib
         {
             LogInfo("Attempting to register game data...");
 
-            // Note to onlookers: this is a way for me to automatically register my custom
-            // GDOs without individually referencing each one here. Copy at your own risk.
-            MethodInfo mAddGameDataObject = typeof(BaseMod).GetMethod(nameof(BaseMod.AddGameDataObject));
-            MethodInfo mAddSubProcess = typeof(BaseMod).GetMethod(nameof(BaseMod.AddSubProcess));
-            foreach (var type in Assembly.GetExecutingAssembly().GetTypes())
-            {
-                if (type.IsAbstract)
-                {
-                    continue;
-                }
-
-                if (typeof(IModGDO).IsAssignableFrom(type))
-                {
-                    LogInfo($"Found custom GDO of type {type.Name}");
-                    MethodInfo generic = mAddGameDataObject.MakeGenericMethod(type);
-                    generic.Invoke(this, null);
-                }
-            }
+            ModGDOs.RegisterModGDOs(this, Assembly.GetExecutingAssembly());
 
             LogInfo("Done loading game data.");
+        }
+
+        private void AddProcessIcons()
+        {
+            Bundle.LoadAllAssets<Texture2D>();
+            Bundle.LoadAllAssets<Sprite>();
+            var spriteAsset = Bundle.LoadAsset<TMP_SpriteAsset>("blend");
+            TMP_Settings.defaultSpriteAsset.fallbackSpriteAssets.Add(spriteAsset);
+            spriteAsset.material = Object.Instantiate(TMP_Settings.defaultSpriteAsset.material);
+            spriteAsset.material.mainTexture = Bundle.LoadAsset<Texture2D>("blendTex");
         }
 
         protected override void OnUpdate()
@@ -80,6 +75,9 @@ namespace ApplianceLib
 
             // Register custom GDOs
             AddGameData();
+
+            // Load process icons
+            //AddProcessIcons();
 
             // Perform actions when game data is built
             Events.BuildGameDataEvent += delegate (object s, BuildGameDataEventArgs args)

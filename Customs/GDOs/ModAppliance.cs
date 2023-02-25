@@ -2,7 +2,7 @@
 using KitchenLib.Customs;
 using UnityEngine;
 
-namespace ApplianceLib.Customs
+namespace ApplianceLib.Customs.GDO
 {
     public abstract class ModAppliance : CustomAppliance, IModGDO
     {
@@ -21,7 +21,5 @@ namespace ApplianceLib.Customs
         protected virtual void SetupPrefab(GameObject prefab) { }
 
         protected virtual void Modify(Appliance appliance) { }
-
-        internal ModAppliance() { }
     }
 }

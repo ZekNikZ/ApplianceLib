@@ -1,20 +1,23 @@
 ﻿using ApplianceLib.Api;
-using ApplianceLib.Customs;
+using ApplianceLib.Api.Prefab;
+using ApplianceLib.Api.References;
+using ApplianceLib.Customs.GDO;
 using ApplianceLib.Util;
 using KitchenData;
 using UnityEngine;
+using static ApplianceLib.Api.References.ApplianceLibGDOs;
 
 namespace ApplianceLib.Appliances.Blender
 {
     public class BlenderCup: ModItem
     {
-        public override string UniqueNameID => "BlenderCup";
-        public override GameObject Prefab => Prefabs.Find("BlenderCup");
+        public override string UniqueNameID => Ids.BlenderCup;
+        public override GameObject Prefab => Prefabs.Create("BlenderCup");
         public override bool IsIndisposable => true;
 
         protected override void SetupPrefab(GameObject prefab)
         {
-            prefab.ApplyMaterialToChild("Cup", MaterialHelpers.GetMaterialArray("Door Glass", "Door Glass", "Door Glass"));
+            prefab.AttachBlenderCup();
         }
 
         protected override void Modify(Item item)

@@ -2,7 +2,7 @@
 
 namespace ApplianceLib.Util
 {
-    internal class DummyItemGroupView : ItemGroupView
+    public class DummyItemGroupView : ItemGroupView
     {
         public void Awake()
         {

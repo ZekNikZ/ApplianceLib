@@ -1,10 +1,11 @@
-﻿using Kitchen;
+﻿using ApplianceLib.Util;
+using Kitchen;
 using KitchenData;
 using KitchenLib.Colorblind;
 using KitchenLib.Customs;
 using UnityEngine;
 
-namespace ApplianceLib.Customs
+namespace ApplianceLib.Customs.GDO
 {
     public abstract class ModItemGroup<T> : CustomItemGroup<T>, IModGDO where T : ItemGroupView
     {
@@ -35,7 +36,10 @@ namespace ApplianceLib.Customs
         protected virtual void SetupPrefab(GameObject prefab) { }
 
         protected virtual void Modify(ItemGroup itemGroup) { }
+    }
 
-        internal ModItemGroup() { }
+    public abstract class ModItemGroup: ModItemGroup<DummyItemGroupView>
+    {
+
     }
 }

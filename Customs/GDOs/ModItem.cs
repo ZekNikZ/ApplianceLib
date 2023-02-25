@@ -1,8 +1,9 @@
 ﻿using KitchenData;
 using KitchenLib.Customs;
 using UnityEngine;
+using static ApplianceLib.Api.References.ApplianceLibGDOs;
 
-namespace ApplianceLib.Customs
+namespace ApplianceLib.Customs.GDO
 {
     public abstract class ModItem : CustomItem, IModGDO
     {
@@ -23,8 +24,6 @@ namespace ApplianceLib.Customs
         protected virtual void SetupPrefab(GameObject prefab) { }
 
         protected virtual void Modify(Item item) { }
-
-        internal ModItem() { }
     }
 
     public abstract class ModItem<T> : ModItem where T : CustomAppliance

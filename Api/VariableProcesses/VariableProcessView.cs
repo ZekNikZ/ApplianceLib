@@ -1,4 +1,5 @@
 ﻿using Kitchen;
+using KitchenMods;
 using MessagePack;
 using System.Collections.Generic;
 using Unity.Collections;
@@ -23,14 +24,20 @@ namespace ApplianceLib.Api
         private static readonly int Index = Animator.StringToHash("Index");
         protected override void UpdateData(ViewData viewData)
         {
-            Animator.SetInteger(ID, viewData.ContainerCurrent);
-            Animator.SetInteger(Index, viewData.ContainerCurrent);
+            if (Animator != null)
+            {
+                Animator.SetInteger(ID, viewData.ContainerCurrent);
+                Animator.SetInteger(Index, viewData.ContainerCurrent);
+            }
 
-            HoldPointContainer.HoldPoint = HoldPoints[viewData.ContainerCurrent];
-            GameObject.transform.parent.parent.GetComponent<ApplianceView>().HeldItemPosition = HoldPointContainer.HoldPoint;
+            if (HoldPoints != null && HoldPointContainer != null)
+            {
+                HoldPointContainer.HoldPoint = HoldPoints[viewData.ContainerCurrent];
+                GameObject.transform.parent.parent.GetComponent<ApplianceView>().HeldItemPosition = HoldPointContainer.HoldPoint;
+            }
         }
 
-        public class UpdateView : IncrementalViewSystemBase<VariableProviderView.ViewData>
+        public class UpdateView : IncrementalViewSystemBase<VariableProviderView.ViewData>, IModSystem
         {
             private EntityQuery Views;
 
@@ -54,8 +61,7 @@ namespace ApplianceLib.Api
 
                     SendUpdate(view, new ViewData
                     {
-                        ContainerCurrent = data.Current,
-                        ContainerMax = data.Max
+                        ContainerCurrent = data.Current
                     }, MessageType.SpecificViewUpdate);
                 }
             }
@@ -67,12 +73,9 @@ namespace ApplianceLib.Api
             [Key(1)]
             public int ContainerCurrent;
 
-            [Key(2)]
-            public int ContainerMax;
-
             public bool IsChangedFrom(ViewData check)
             {
-                return ContainerCurrent != check.ContainerCurrent || ContainerMax != check.ContainerMax;
+                return ContainerCurrent != check.ContainerCurrent;
             }
 
             public IUpdatableObject GetRelevantSubview(IObjectView view)
