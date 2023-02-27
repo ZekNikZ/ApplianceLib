@@ -21,6 +21,11 @@ namespace ApplianceLib.Api
             }
         }
 
+        /// <summary>
+        /// Attaches an appliance colorblind label to a GameObject.
+        /// </summary>
+        /// <param name="holder">The parent of the label.</param>
+        /// <param name="title">The label text.</param>
         public static void AddApplianceColorblindLabel(this GameObject holder, string title)
         {
             var colorblindLabel = Object.Instantiate(Template);
