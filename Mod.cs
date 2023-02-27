@@ -51,6 +51,7 @@ namespace ApplianceLib
             Bundle.LoadAllAssets<Texture2D>();
             Bundle.LoadAllAssets<Sprite>();
             var spriteAsset = Bundle.LoadAsset<TMP_SpriteAsset>("blend");
+            Mod.LogInfo(spriteAsset);
             TMP_Settings.defaultSpriteAsset.fallbackSpriteAssets.Add(spriteAsset);
             spriteAsset.material = Object.Instantiate(TMP_Settings.defaultSpriteAsset.material);
             spriteAsset.material.mainTexture = Bundle.LoadAsset<Texture2D>("blendTex");
@@ -77,28 +78,18 @@ namespace ApplianceLib
             AddGameData();
 
             // Load process icons
-            //AddProcessIcons();
+            AddProcessIcons();
 
             // Perform actions when game data is built
             Events.BuildGameDataEvent += delegate (object s, BuildGameDataEventArgs args)
             {
                 Item tomato = (Item)GDOUtils.GetExistingGDO(ItemReferences.Tomato);
-                if (tomato != null)
+                tomato.DerivedProcesses.Add(new Item.ItemProcess
                 {
-                    tomato.DerivedProcesses.Add(new Item.ItemProcess
-                    {
-                        Process = Refs.BlendProcess,
-                        Duration = 1,
-                        Result = (Item)GDOUtils.GetExistingGDO(ItemReferences.TomatoSauce)
-                    });
-                }
-
-                Item pizza = (Item)GDOUtils.GetExistingGDO(ItemReferences.PizzaCooked);
-                if (pizza != null)
-                {
-                    RestrictedItemSplits.BlacklistItem(pizza);
-                    RestrictedItemSplits.AllowItem("test", pizza);
-                }
+                    Process = Refs.BlendProcess,
+                    Duration = 2,
+                    Result = (Item)GDOUtils.GetExistingGDO(ItemReferences.TomatoSauce)
+                });
             };
             Events.BuildGameDataEvent += ApplianceGroups.BuildGameDataEventCallback;
         }

@@ -9,7 +9,7 @@ using static ApplianceLib.Api.References.ApplianceLibGDOs;
 
 namespace ApplianceLib.Appliances.DeepFryer
 {
-    public class DeepFryer : ModAppliance
+    public class DeepFryer : ModAppliance, IPreventRegistration
     {
         public override string UniqueNameID => Ids.DeepFryerAppliance;
         public override GameObject Prefab => Prefabs.Find("DeepFryer");

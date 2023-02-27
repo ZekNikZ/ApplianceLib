@@ -52,6 +52,7 @@ namespace ApplianceLib.Customs
                     if (GameData.Main.TryGet<Appliance>(appliance.ID, out var _))
                     {
                         bool isAllowed = false;
+                        bool isPrevented = false;
                         if (Require(proposal.Source, out CRestrictedSplitter source))
                         {
                             string applianceKey = source.ApplianceKey.ConvertToString();
@@ -59,9 +60,13 @@ namespace ApplianceLib.Customs
                             {
                                 isAllowed = true;
                             }
-                        } 
-                        
-                        if (!isAllowed && RestrictedItemSplits.IsBlacklisted(item.ID))
+                            else if (source.PreventOtherSplitting)
+                            {
+                                isPrevented = true;
+                            }
+                        }
+
+                        if (isPrevented || (!isAllowed && RestrictedItemSplits.IsBlacklisted(item.ID)))
                         {
                             proposal.Status = ItemTransferStatus.Pruned;
                         }
@@ -85,6 +90,7 @@ namespace ApplianceLib.Customs
                     if (GameData.Main.TryGet<Appliance>(appliance.ID, out var _))
                     {
                         bool isAllowed = false;
+                        bool isPrevented = false;
                         if (Require(heldBy.Holder, out CRestrictedSplitter source))
                         {
                             string applianceKey = source.ApplianceKey.ConvertToString();
@@ -92,9 +98,13 @@ namespace ApplianceLib.Customs
                             {
                                 isAllowed = true;
                             }
+                            else if (source.PreventOtherSplitting)
+                            {
+                                isPrevented = true;
+                            }
                         }
 
-                        if (!isAllowed && RestrictedItemSplits.IsBlacklisted(item.ID))
+                        if (isPrevented || (!isAllowed && RestrictedItemSplits.IsBlacklisted(item.ID)))
                         {
                             EntityManager.RemoveComponent<CItemUndergoingProcess>(entity);
                         }

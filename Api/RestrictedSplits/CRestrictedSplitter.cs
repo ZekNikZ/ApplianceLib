@@ -7,5 +7,6 @@ namespace ApplianceLib.Api
     public struct CRestrictedSplitter: IApplianceProperty, IModComponent
     {
         public FixedString32 ApplianceKey;
+        public bool PreventOtherSplitting;
     }
 }

@@ -26,11 +26,7 @@ namespace ApplianceLib.Appliances.MixingBowl
         public override List<IApplianceProperty> Properties => new()
         {
             new CItemHolder(),
-            KitchenPropertiesUtils.GetCItemProvider(Refs.MixingBowl.ID, 1, 1, false, false, true, false, false, true, false),
-            new CRestrictedSplitter
-            {
-                ApplianceKey = "test"
-            }
+            KitchenPropertiesUtils.GetCItemProvider(Refs.MixingBowl.ID, 1, 1, false, false, true, false, false, true, false)
         };
 
         protected override void SetupPrefab(GameObject prefab)

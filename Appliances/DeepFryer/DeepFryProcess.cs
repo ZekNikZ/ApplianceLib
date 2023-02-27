@@ -6,7 +6,7 @@ using static ApplianceLib.Api.References.ApplianceLibGDOs;
 
 namespace ApplianceLib.Appliances.DeepFryer
 {
-    public class DeepFryProcess : ModProcess
+    public class DeepFryProcess : ModProcess, IPreventRegistration
     {
         public override string UniqueNameID => Ids.DeepFryProcess;
         public override GameDataObject BasicEnablingAppliance => Refs.DeepFryer;

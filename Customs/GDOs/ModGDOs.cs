@@ -17,7 +17,7 @@ namespace ApplianceLib.Customs
                     continue;
                 }
 
-                if (typeof(IModGDO).IsAssignableFrom(type))
+                if (typeof(IModGDO).IsAssignableFrom(type) && !typeof(IPreventRegistration).IsAssignableFrom(type))
                 {
                     MethodInfo generic = mAddGameDataObject.MakeGenericMethod(type);
                     generic.Invoke(mod, null);
