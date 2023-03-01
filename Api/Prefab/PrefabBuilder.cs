@@ -1,5 +1,6 @@
 ﻿using ApplianceLib.Api.References;
 using ApplianceLib.Util;
+using System.Reflection;
 using UnityEngine;
 
 namespace ApplianceLib.Api.Prefab
@@ -12,6 +13,16 @@ namespace ApplianceLib.Api.Prefab
 
     public static class PrefabBuilder
     {
+        /// <summary>
+        /// Create an empty prefab. Useful if your prefab will only consist of parts from other methods found here.
+        /// </summary>
+        /// <param name="uniqueId">The unique ID to assign to this prefab. Reuse this ID to reference the same prefab as generated earlier.</param>
+        /// <returns>The new empty prefab or cached existing prefab.</returns>
+        public static GameObject CreateEmptyPrefab(string uniqueId)
+        {
+            return Prefabs.Create($"{uniqueId} (PrefabBuilder) ({Assembly.GetCallingAssembly().FullName})");
+        }
+
         public static GameObject AttachPrefabAsChild(this GameObject parent, GameObject prefab)
         {
             // Attach prefab

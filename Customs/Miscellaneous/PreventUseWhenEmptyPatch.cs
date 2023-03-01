@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using ApplianceLib.Api;
+using HarmonyLib;
 using Kitchen;
 using Unity.Entities;
 
@@ -20,12 +21,15 @@ namespace ApplianceLib.Customs
     {
         static bool Prefix(ref InteractionData data, ref bool __result)
         {
-            if (TriggerActivationInitialisePatch.EntityManager.RequireComponent(data.Target, out CItemHolder holder))
+            if (TriggerActivationInitialisePatch.EntityManager.HasComponent<CPreventUseWhenEmpty>(data.Target))
             {
-                if (!TriggerActivationInitialisePatch.EntityManager.HasComponent<CItem>(holder.HeldItem))
+                if (TriggerActivationInitialisePatch.EntityManager.RequireComponent(data.Target, out CItemHolder holder))
                 {
-                    __result = false;
-                    return false;
+                    if (!TriggerActivationInitialisePatch.EntityManager.HasComponent<CItem>(holder.HeldItem))
+                    {
+                        __result = false;
+                        return false;
+                    }
                 }
             }
 
