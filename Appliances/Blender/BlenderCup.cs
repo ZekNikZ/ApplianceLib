@@ -12,7 +12,7 @@ namespace ApplianceLib.Appliances.Blender
     public class BlenderCup: ModItem
     {
         public override string UniqueNameID => Ids.BlenderCup;
-        public override GameObject Prefab => Prefabs.Create("BlenderCup");
+        public override GameObject Prefab => Prefabs.Find("BlenderCup");
         public override bool IsIndisposable => true;
 
         protected override void SetupPrefab(GameObject prefab)
