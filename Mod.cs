@@ -1,7 +1,6 @@
 ﻿using ApplianceLib.Api;
-using ApplianceLib.Api.FlexibleContainer;
+using ApplianceLib.Api.References;
 using ApplianceLib.Customs;
-using ApplianceLib.Util;
 using Kitchen;
 using KitchenData;
 using KitchenLib;
@@ -14,7 +13,6 @@ using System.Linq;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 using static ApplianceLib.Api.References.ApplianceLibGDOs;
 
 namespace ApplianceLib
@@ -91,6 +89,9 @@ namespace ApplianceLib
                 if (!args.firstBuild)
                     return;
 
+                // Custom Restricted Items
+                RestrictedTransferKeys.Setup(args.gamedata);
+
                 // Update Tomato Recipe
                 Item tomato = (Item)GDOUtils.GetExistingGDO(ItemReferences.Tomato);
                 tomato.DerivedProcesses.Add(new Item.ItemProcess
@@ -100,50 +101,75 @@ namespace ApplianceLib
                     Result = (Item)GDOUtils.GetExistingGDO(ItemReferences.TomatoSauce)
                 });
 
+                Item turkey = (Item)GDOUtils.GetExistingGDO(ItemReferences.TurkeyIngredient);
+                turkey.DerivedProcesses.Add(new Item.ItemProcess
+                {
+                    Process = (Process)GDOUtils.GetExistingGDO(ProcessReferences.Clean),
+                    Duration = 2,
+                    Result = (Item)GDOUtils.GetExistingGDO(ItemReferences.TomatoSauce)
+                });
+
                 LogInfo("Updating wash basin.");
 
                 // Update Dishwasher & Wash Basin
                 #region Update Wash Basin
-                var wash_basin = Refs.Find<Appliance>(ApplianceReferences.SinkLarge);
-                wash_basin.Processes = new()
+                var washBasin = Refs.Find<Appliance>(ApplianceReferences.SinkLarge);
+                washBasin.Processes = new()
                 {
                     new()
                     {
                         Process = Refs.Find<Process>(ProcessReferences.Clean)
                     }
                 };
-                wash_basin.Properties = new()
+                washBasin.Properties = new()
                 {
-                    new CDisplayDuration()
+                    new CDisplayDuration
                     {
                         Process = ProcessReferences.Clean
                     },
-                    new CTakesDuration()
+                    new CTakesDuration
                     {
                         Manual = true,
                         RelevantTool = DurationToolType.Clean,
                         Mode = InteractionMode.Items,
                         Total = 5
                     },
-                    new CFlexibleContainer()
+                    new CFlexibleContainer
                     {
                         Maximum = 4
                     },
-                    new CAppliesProcessToFlexible()
+                    new CAppliesProcessToFlexible
                     {
-                        Minimum = 1,
-                        ProcessTimeMultiplier = 0.625f,
-                        MinimumProcessTime = 2.5f,
-                        TransferWhitelist = true,
-                        Process = ProcessReferences.Clean,
+                        MinimumItems = 1,
+                        ProcessTimeMultiplier = 2.5f,
+                        MinimumProcessTime = 2,
+                        ProcessType = FlexibleProcessType.Average
+                    },
+                    new CRestrictedReceiver
+                    {
+                        ApplianceKey = RestrictedTransferKeys.Cleanable
+                    },
+                    new CChangeRestrictedReceiverKeyAfterDuration
+                    {
+                        ApplianceKey = RestrictedTransferKeys.CleanedItems
+                    },
+                    new CChangeRestrictedReceiverKeyWhenEmpty
+                    {
+                        ApplianceKey = RestrictedTransferKeys.Cleanable
+                    },
+                    new CCausesSpills
+                    {
+                        ID = ApplianceReferences.MopWater,
+                        Rate = 1,
+                        OverwriteOtherMesses = true
                     }
                 };
 
-                Object.Destroy(wash_basin.Prefab.GetComponent<LimitedItemSourceView>());
-                var view = wash_basin.Prefab.AddComponent<FlexibleContainerView>();
-                for (int i = 0; i < wash_basin.Prefab.GetChildCount(); i++)
-                    if (wash_basin.Prefab.GetChild(i).name.ToLower().Contains("holdpoint"))
-                        view.Transforms.Add(wash_basin.Prefab.transform.GetChild(i));
+                Object.Destroy(washBasin.Prefab.GetComponent<LimitedItemSourceView>());
+                var view = washBasin.Prefab.AddComponent<FlexibleContainerView>();
+                for (int i = 0; i < washBasin.Prefab.GetChildCount(); i++)
+                    if (washBasin.Prefab.GetChild(i).name.ToLower().Contains("holdpoint"))
+                        view.Transforms.Add(washBasin.Prefab.transform.GetChild(i));
                 #endregion
 
                 #region Update Dishwasher
@@ -162,22 +188,27 @@ namespace ApplianceLib
                 };
                 dishwasher.Properties = new()
                 {
-                    new CTakesDuration()
+                    new CTakesDuration
                     {
                         Mode = InteractionMode.Items,
                         Total = 10
                     },
-                    new CFlexibleContainer()
+                    new CFlexibleContainer
                     {
                         Maximum = 4
                     },
-                    new CAppliesProcessToFlexible()
+                    new CAppliesProcessToFlexible(),
+                    new CRestrictedReceiver
                     {
-                        Minimum = 0,
-                        ProcessTimeMultiplier = 1.25f,
-                        MinimumProcessTime = 5f,
-                        TransferWhitelist = true,
-                        Process = ProcessReferences.Clean,
+                        ApplianceKey = RestrictedTransferKeys.Cleanable
+                    },
+                    new CChangeRestrictedReceiverKeyAfterDuration
+                    {
+                        ApplianceKey = RestrictedTransferKeys.CleanedItems
+                    },
+                    new CChangeRestrictedReceiverKeyWhenEmpty
+                    {
+                        ApplianceKey = RestrictedTransferKeys.Cleanable
                     },
                     new CRequiresActivation(),
                     new CIsInactive(),
@@ -189,16 +220,16 @@ namespace ApplianceLib
                 Object.Destroy(prefab.GetComponent<LimitedItemSourceView>());
                 Object.Destroy(prefab.GetComponent<LimitedItemSourceLightsView>());
                 var flexible = prefab.AddComponent<FlexibleContainerLightsView>();
-                var dishpref = prefab.GetChild("DishWasher");
-                var dishes = dishpref.GetChildFromPath("Door/Dishes");
+                var dishwasherChild = prefab.GetChild("DishWasher");
+                var dishes = dishwasherChild.GetChild("Door/Dishes");
                 for (int i = 0; i < dishes.GetChildCount(); i++)
                 {
                     Object.Destroy(dishes.GetChild(i).GetChild(0));
                     flexible.Transforms.Add(dishes.transform.GetChild(i));
                 }
-                for (int i = 0; i < dishpref.GetChildCount(); i++)
+                for (int i = 0; i < dishwasherChild.GetChildCount(); i++)
                 {
-                    var child = dishpref.GetChild(i);
+                    var child = dishwasherChild.GetChild(i);
                     if (!child.name.Contains("Socket") && child.name.Contains("Light"))
                     {
                         flexible.Lights.Add(child.GetComponent<MeshRenderer>());

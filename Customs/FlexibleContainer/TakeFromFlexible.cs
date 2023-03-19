@@ -1,10 +1,10 @@
-﻿using ApplianceLib.Api.FlexibleContainer;
+﻿using ApplianceLib.Api;
 using ApplianceLib.Util;
 using Kitchen;
 using KitchenMods;
 using Unity.Entities;
 
-namespace ApplianceLib.Customs.FlexibleContainer
+namespace ApplianceLib.Customs
 {
     [UpdateInGroup(typeof(ItemTransferPropose))]
     public class TakeFromFlexible : TransferInteractionProposalSystem, IModSystem

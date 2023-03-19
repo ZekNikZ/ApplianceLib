@@ -1,9 +1,7 @@
 ﻿using ApplianceLib.Api;
-using ApplianceLib.Api.FlexibleContainer;
 using HarmonyLib;
 using Kitchen;
 using KitchenData;
-using System.Linq;
 using System.Reflection;
 using Unity.Collections;
 using Unity.Entities;
@@ -55,9 +53,7 @@ namespace ApplianceLib.Customs
                 #region Flexible Container
                 if (___ctx.Require<CFlexibleContainer>(occupant, out var flexible) && GameData.Main.TryGet<Item>(itemComp, out var item, true))
                 {
-                    if (flexible.Items.Count < flexible.Maximum &&
-                        !(___ctx.Require<CAppliesProcessToFlexible>(occupant, out var processFlexible) && processFlexible.TransferWhitelist && !item.DerivedProcesses.Any(process => process.Process.ID == processFlexible.Process))
-                        && !(!___ctx.Has<CIsInactive>(occupant) && ___ctx.Has<CLockedWhileDuration>(occupant)))
+                    if (flexible.Items.Count < flexible.Maximum && !(!___ctx.Has<CIsInactive>(occupant) && ___ctx.Has<CLockedWhileDuration>(occupant)))
                     {
                         if (push.Progress < push.Delay)
                         {

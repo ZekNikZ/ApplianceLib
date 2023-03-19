@@ -1,5 +1,6 @@
 ﻿using ApplianceLib.Api.References;
 using ApplianceLib.Util;
+using KitchenLib.Utils;
 using System.Reflection;
 using UnityEngine;
 
@@ -44,7 +45,7 @@ namespace ApplianceLib.Api.Prefab
         public static void AttachBlenderCup(this GameObject parent)
         {
             var child = parent.AttachPrefabAsChild(Prefabs.Find("BlenderCup"));
-            child.ApplyMaterialToChild("Cup", MaterialHelpers.GetMaterialArray("Door Glass", "Door Glass", "Door Glass"));
+            child.ApplyMaterialToChild("Cup", MaterialUtils.GetMaterialArray("Door Glass", "Door Glass", "Door Glass"));
         }
 
         public static void AttachCounter(this GameObject parent, CounterType type)
@@ -53,16 +54,16 @@ namespace ApplianceLib.Api.Prefab
             switch (type)
             {
                 case CounterType.DoubleDoors:
-                    child.ApplyMaterialToChild("Block/Counter2/Counter", MaterialHelpers.GetMaterialArray("Wood 4 - Painted"));
-                    child.ApplyMaterialToChild("Block/Counter2/Counter Doors", MaterialHelpers.GetMaterialArray("Wood 4 - Painted"));
-                    child.ApplyMaterialToChild("Block/Counter2/Counter Surface", MaterialHelpers.GetMaterialArray("Wood - Default"));
-                    child.ApplyMaterialToChild("Block/Counter2/Counter Top", MaterialHelpers.GetMaterialArray("Wood - Default"));
-                    child.ApplyMaterialToChild("Block/Counter2/Handles", MaterialHelpers.GetMaterialArray("Knob"));
+                    child.ApplyMaterialToChild("Block/Counter2/Counter", MaterialUtils.GetMaterialArray("Wood 4 - Painted"));
+                    child.ApplyMaterialToChild("Block/Counter2/Counter Doors", MaterialUtils.GetMaterialArray("Wood 4 - Painted"));
+                    child.ApplyMaterialToChild("Block/Counter2/Counter Surface", MaterialUtils.GetMaterialArray("Wood - Default"));
+                    child.ApplyMaterialToChild("Block/Counter2/Counter Top", MaterialUtils.GetMaterialArray("Wood - Default"));
+                    child.ApplyMaterialToChild("Block/Counter2/Handles", MaterialUtils.GetMaterialArray("Knob"));
                     break;
                 case CounterType.Drawers:
-                    child.ApplyMaterialToChild("Base_L_Counter.blend", MaterialHelpers.GetMaterialArray("Wood - Default", "Wood 4 - Painted", "Wood 4 - Painted"));
-                    child.ApplyMaterialToChild("Base_L_Counter.blend/Handle_L_Counter.blend", MaterialHelpers.GetMaterialArray("Knob"));
-                    child.ApplyMaterialToChild("Top", MaterialHelpers.GetMaterialArray("Wood - Default"));
+                    child.ApplyMaterialToChild("Base_L_Counter.blend", MaterialUtils.GetMaterialArray("Wood - Default", "Wood 4 - Painted", "Wood 4 - Painted"));
+                    child.ApplyMaterialToChild("Base_L_Counter.blend/Handle_L_Counter.blend", MaterialUtils.GetMaterialArray("Knob"));
+                    child.ApplyMaterialToChild("Top", MaterialUtils.GetMaterialArray("Wood - Default"));
                     break;
             }
         }
@@ -76,19 +77,19 @@ namespace ApplianceLib.Api.Prefab
         {
             var child = parent.AttachPrefabAsChild(Prefabs.Find($"Cup"));
 
-            child.ApplyMaterialToChild("Model/Cup", MaterialHelpers.GetMaterialArray(MaterialReferences.CupBase));
+            child.ApplyMaterialToChild("Model/Cup", MaterialUtils.GetMaterialArray(MaterialReferences.CupBase));
 
             if (liquidMaterial != null)
             {
                 child.ApplyMaterialToChild("Model/Liquid", new Material[] { liquidMaterial });
             }
-            child.GetChildFromPath("Model/Liquid").SetActive(liquidMaterial != null);
+            child.GetChild("Model/Liquid").SetActive(liquidMaterial != null);
 
             if (withStraw)
             {
-                child.ApplyMaterialToChild("Model/Straw", MaterialHelpers.GetMaterialArray(MaterialReferences.CupStraw));
+                child.ApplyMaterialToChild("Model/Straw", MaterialUtils.GetMaterialArray(MaterialReferences.CupStraw));
             }
-            child.GetChildFromPath("Model/Straw").SetActive(withStraw);
+            child.GetChild("Model/Straw").SetActive(withStraw);
         }
     }
 }

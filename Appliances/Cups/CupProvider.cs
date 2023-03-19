@@ -1,8 +1,8 @@
 ﻿using ApplianceLib.Api.Prefab;
 using ApplianceLib.Api.References;
-using ApplianceLib.Customs.GDO;
 using ApplianceLib.Util;
 using KitchenData;
+using KitchenLib.Customs;
 using KitchenLib.Utils;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +10,7 @@ using static ApplianceLib.Api.References.ApplianceLibGDOs;
 
 namespace ApplianceLib.Appliances.Cups
 {
-    public class CupProvider : ModAppliance
+    public class CupProvider : CustomAppliance
     {
         public override string UniqueNameID => Ids.CupSource;
         public override GameObject Prefab => Prefabs.Find("CupProvider");
@@ -27,7 +27,7 @@ namespace ApplianceLib.Appliances.Cups
             KitchenPropertiesUtils.GetUnlimitedCItemProvider(Refs.Cup.ID)
         };
 
-        protected override void SetupPrefab(GameObject prefab)
+        public override void SetupPrefab(GameObject prefab)
         {
             prefab.AttachCounter(CounterType.Drawers);
 

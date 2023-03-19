@@ -1,14 +1,12 @@
 ﻿using ApplianceLib.Api;
-using ApplianceLib.Api.FlexibleContainer;
 using ApplianceLib.Util;
 using Kitchen;
 using KitchenData;
 using KitchenMods;
-using System.Linq;
 using Unity.Collections;
 using Unity.Entities;
 
-namespace ApplianceLib.Customs.FlexibleContainer
+namespace ApplianceLib.Customs
 {
     [UpdateInGroup(typeof(ItemTransferAccept))]
     public class AcceptIntoFlexible : TransferAcceptSystem, IModSystem
@@ -47,9 +45,6 @@ namespace ApplianceLib.Customs.FlexibleContainer
                     continue;
 
                 if (Has<CPreventUse>(proposal.Destination) || Has<CPreventItemTransfer>(proposal.Destination))
-                    continue;
-
-                if (Require<CAppliesProcessToFlexible>(proposal.Destination, out var flexibleProcess) && flexibleProcess.TransferWhitelist && !item.DerivedProcesses.Any(process => process.Process.ID == flexibleProcess.Process))
                     continue;
 
                 if (Require<CRestrictedReceiver>(proposal.Destination, out var restrictedReceiver) && !RestrictedItemTransfers.IsAllowed(restrictedReceiver.ApplianceKey.ToString(), proposal.ItemData.ID))

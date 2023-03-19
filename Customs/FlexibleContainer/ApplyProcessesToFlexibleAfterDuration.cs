@@ -1,4 +1,4 @@
-﻿using ApplianceLib.Api.FlexibleContainer;
+﻿using ApplianceLib.Api;
 using Kitchen;
 using KitchenData;
 using KitchenMods;
@@ -7,15 +7,20 @@ using System.Linq;
 using Unity.Collections;
 using Unity.Entities;
 
-namespace ApplianceLib.Customs.FlexibleContainer
+namespace ApplianceLib.Customs
 {
-    public class ApplyProcessesToFlexible : GameSystemBase, IModSystem
+    public class ApplyProcessesToFlexibleAfterDuration : GameSystemBase, IModSystem
     {
         private EntityQuery query;
         protected override void Initialise()
         {
             base.Initialise();
-            query = GetEntityQuery(new QueryHelper().All(typeof(CTakesDuration), typeof(CFlexibleContainer), typeof(CAppliesProcessToFlexible)));
+            query = GetEntityQuery(new QueryHelper().All(
+                typeof(CAppliance),
+                typeof(CTakesDuration),
+                typeof(CFlexibleContainer),
+                typeof(CAppliesProcessToFlexible)
+            ));
         }
 
         protected override void OnUpdate()
@@ -25,13 +30,13 @@ namespace ApplianceLib.Customs.FlexibleContainer
             foreach (var entity in entities)
             {
                 if (!Require<CTakesDuration>(entity, out var duration) ||
-                    !Require<CAppliesProcessToFlexible>(entity, out var process) ||
+                    !Has<CAppliesProcessToFlexible>(entity) ||
                     !Require<CFlexibleContainer>(entity, out var container) ||
-                    !Require<CAppliance>(entity, out var applianceComp))
+                    !Require<CAppliance>(entity, out var cAppliance))
                     continue;
 
                 if (!(duration.Remaining <= 0f && duration.Active) ||
-                    !GameData.Main.TryGet<Appliance>(applianceComp.ID, out var appliance))
+                    !GameData.Main.TryGet<Appliance>(cAppliance.ID, out var appliance))
                     continue;
 
                 List<(int item, ItemList components)> convertedItems = new();
@@ -54,8 +59,8 @@ namespace ApplianceLib.Customs.FlexibleContainer
                 }
 
                 container.Items = new();
-                foreach (var itemSet in convertedItems)
-                    container.Items.Add(itemSet.item, itemSet.components);
+                foreach (var (item, components) in convertedItems)
+                    container.Items.Add(item, components);
 
                 Set(entity, container);
             }

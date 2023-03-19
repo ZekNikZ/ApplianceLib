@@ -1,12 +1,13 @@
 ﻿using ApplianceLib.Customs.GDO;
 using KitchenData;
+using KitchenLib.Customs;
 using KitchenLib.Utils;
 using System.Collections.Generic;
 using static ApplianceLib.Api.References.ApplianceLibGDOs;
 
 namespace ApplianceLib.Appliances.DeepFryer
 {
-    public class DeepFryProcess : ModProcess, IPreventRegistration
+    public class DeepFryProcess : CustomProcess, IPreventRegistration
     {
         public override string UniqueNameID => Ids.DeepFryProcess;
         public override GameDataObject BasicEnablingAppliance => Refs.DeepFryer;

@@ -1,10 +1,10 @@
-﻿using ApplianceLib.Api.FlexibleContainer;
+﻿using ApplianceLib.Api;
 using Kitchen;
 using KitchenMods;
 using Unity.Collections;
 using Unity.Entities;
 
-namespace ApplianceLib.Customs.FlexibleContainer
+namespace ApplianceLib.Customs
 {
     public class ResetFlexibleNight : StartOfNightSystem, IModSystem
     {

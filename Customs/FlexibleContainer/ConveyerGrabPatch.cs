@@ -1,16 +1,14 @@
-﻿using ApplianceLib.Api.FlexibleContainer;
+﻿using ApplianceLib.Api;
 using HarmonyLib;
 using Kitchen;
 using Unity.Entities;
 
-namespace ApplianceLib.Customs.FlexibleContainer
+namespace ApplianceLib.Customs
 {
-    [HarmonyPatch(typeof(GrabItems))]
+    [HarmonyPatch(typeof(GrabItems), "AttemptGrabFromProvider")]
     public class ConveyerGrabPatch
     {
-        [HarmonyPatch("AttemptGrabFromProvider")]
-        [HarmonyPrefix]
-        static bool GrabFromProvider_Postfix(ref Entity target, ref EntityContext ctx, ref Entity e, ref CConveyPushItems grab, ref bool __result)
+        static bool Prefix(ref Entity target, ref EntityContext ctx, ref Entity e, ref CConveyPushItems grab, ref bool __result)
         {
             if (!ctx.Require<CFlexibleContainer>(target, out var container))
                 return true;

@@ -1,17 +1,20 @@
 ﻿using KitchenData;
 using KitchenMods;
 
-namespace ApplianceLib.Api.FlexibleContainer
+namespace ApplianceLib.Api
 {
+    public enum FlexibleProcessType
+    {
+        UseTakesDurationTime,
+        Additive,
+        Average
+    }
+
     public struct CAppliesProcessToFlexible : IApplianceProperty, IModComponent
     {
-        public int Minimum; // Minimum before process can apply
-
+        public int MinimumItems;
+        public FlexibleProcessType ProcessType;
         public float ProcessTimeMultiplier;
         public float MinimumProcessTime;
-
-        // Whitelist (optional)
-        public int Process;
-        public bool TransferWhitelist;
     }
 }

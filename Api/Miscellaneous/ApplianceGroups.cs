@@ -189,11 +189,14 @@ namespace ApplianceLib.Api
 
         internal static void BuildGameDataEventCallback(object sender, BuildGameDataEventArgs args)
         {
-            foreach (var entry in Processes)
+            if (args.firstBuild)
             {
-                foreach (var appliance in Appliances[entry.Key])
+                foreach (var entry in Processes)
                 {
-                    appliance.Processes.AddRange(entry.Value);
+                    foreach (var appliance in Appliances[entry.Key])
+                    {
+                        appliance.Processes.AddRange(entry.Value);
+                    }
                 }
             }
         }

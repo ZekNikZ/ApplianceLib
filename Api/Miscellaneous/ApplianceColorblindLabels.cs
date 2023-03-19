@@ -1,6 +1,6 @@
-﻿using ApplianceLib.Util;
-using KitchenData;
+﻿using KitchenData;
 using KitchenLib.References;
+using KitchenLib.Utils;
 using UnityEngine;
 
 namespace ApplianceLib.Api
@@ -14,7 +14,7 @@ namespace ApplianceLib.Api
             {
                 if (_template == null)
                 {
-                    _template = GameData.Main.Get<Appliance>(ApplianceReferences.SourceIceCream).Prefab.GetChildFromPath("Colour Blind");
+                    _template = GameData.Main.Get<Appliance>(ApplianceReferences.SourceIceCream).Prefab.GetChild("Colour Blind");
                 }
 
                 return _template;

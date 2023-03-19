@@ -1,10 +1,12 @@
 ﻿using KitchenData;
 using KitchenLib.Customs;
+using System;
 using UnityEngine;
 using static ApplianceLib.Api.References.ApplianceLibGDOs;
 
 namespace ApplianceLib.Customs.GDO
 {
+    [Obsolete("Will be removed in version 0.2.0. Use KitchenLib CustomItem instead.", true)]
     public abstract class ModItem : CustomItem, IModGDO
     {
         public abstract override string UniqueNameID { get; }
@@ -26,6 +28,7 @@ namespace ApplianceLib.Customs.GDO
         protected virtual void Modify(Item item) { }
     }
 
+    [Obsolete("Will be removed in version 0.2.0. Use KitchenLib CustomItem instead.", true)]
     public abstract class ModItem<T> : ModItem where T : CustomAppliance
     {
         public override Appliance DedicatedProvider => Refs.Find<Appliance, T>();

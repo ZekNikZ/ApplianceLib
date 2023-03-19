@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using ApplianceLib.Customs.GDO;
 using static ApplianceLib.Api.References.ApplianceLibGDOs;
+using KitchenLib.Customs;
 
 namespace ApplianceLib.Appliances.DeepFryer
 {
-    public class DeepFryer : ModAppliance, IPreventRegistration
+    public class DeepFryer : CustomAppliance, IPreventRegistration
     {
         public override string UniqueNameID => Ids.DeepFryerAppliance;
         public override GameObject Prefab => Prefabs.Find("DeepFryer");
@@ -49,11 +50,11 @@ namespace ApplianceLib.Appliances.DeepFryer
             }
         };
 
-        protected override void SetupPrefab(GameObject prefab)
+        public override void SetupPrefab(GameObject prefab)
         {
-            prefab.ApplyMaterialToChild("DeepFryerModel/Base", MaterialHelpers.GetMaterialArray("Metal- Shiny"));
-            prefab.ApplyMaterialToChild("DeepFryerModel/Basket", MaterialHelpers.GetMaterialArray("Metal- Shiny"));
-            prefab.ApplyMaterialToChild("DeepFryerModel/Liquid", MaterialHelpers.GetMaterialArray("Metal- Shiny"));
+            prefab.ApplyMaterialToChild("DeepFryerModel/Base", MaterialUtils.GetMaterialArray("Metal- Shiny"));
+            prefab.ApplyMaterialToChild("DeepFryerModel/Basket", MaterialUtils.GetMaterialArray("Metal- Shiny"));
+            prefab.ApplyMaterialToChild("DeepFryerModel/Liquid", MaterialUtils.GetMaterialArray("Metal- Shiny"));
         }
     }
 }

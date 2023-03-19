@@ -2,7 +2,7 @@
 using KitchenData;
 using KitchenMods;
 
-namespace ApplianceLib.Api.FlexibleContainer
+namespace ApplianceLib.Api
 {
     public struct CFlexibleContainer : IApplianceProperty, IModComponent
     {

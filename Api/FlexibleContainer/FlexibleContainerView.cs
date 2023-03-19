@@ -7,7 +7,7 @@ using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
-namespace ApplianceLib.Api.FlexibleContainer
+namespace ApplianceLib.Api
 {
     public class FlexibleContainerView : UpdatableObjectView<FlexibleContainerView.ViewData>
     {

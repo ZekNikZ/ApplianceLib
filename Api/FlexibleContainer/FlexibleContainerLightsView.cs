@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace ApplianceLib.Api.FlexibleContainer
+namespace ApplianceLib.Api
 {
     public class FlexibleContainerLightsView : FlexibleContainerView
     {
