@@ -19,13 +19,19 @@ namespace ApplianceLib.Customs
         {
             var target = data.Target;
             if (Has<CPreventUse>(target) || Has<CPreventItemTransfer>(target) || !Require<CFlexibleContainer>(target, out var storage))
+            {
                 return false;
+            }
 
-            if (!Has<CIsInactive>() && Has<CLockedWhileDuration>())
+            if (Has<CLockedWhileDuration>(target) && Require(data.Target, out CTakesDuration duration) && duration.Active)
+            {
                 return false;
+            }
 
-            if (storage.Maximum < 1 || storage.Items.Count < 1)
+            if (storage.Maximum == 0 || storage.Items.Count == 0)
+            {
                 return false;
+            }
 
             var currentIndex = storage.Items.Count - 1;
             var item = storage.Items.GetItem(currentIndex);
