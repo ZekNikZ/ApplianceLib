@@ -12,7 +12,7 @@ namespace ApplianceLib.Api.Miscellaneous
     {
         public void Add(int item, ItemList components)
         {
-            Keys.Add(Items.Length);
+            Keys.Add(Components.Length);
             Items.Add(item);
             foreach (var comp in components)
                 Components.Add(comp);
@@ -20,7 +20,7 @@ namespace ApplianceLib.Api.Miscellaneous
 
         public void Add(int item)
         {
-            Keys.Add(Items.Length);
+            Keys.Add(Components.Length);
             Items.Add(item);
             Components.Add(item);
         }
@@ -30,20 +30,29 @@ namespace ApplianceLib.Api.Miscellaneous
             if (index >= Count)
                 return;
 
-            var key = Keys[index];
-            var maxKey = index + 1 >= Keys.Length ? Keys.Length : Keys[index + 1];
+            // Determine the range in the component list
+            var startIndex = Keys[index];
+            var endIndex = index + 1 >= Keys.Length ? Components.Length : Keys[index + 1];
+            var numComponents = endIndex - startIndex;
 
-            for (int i = key; i < maxKey; i++)
-                Components.RemoveAtSwapBack(key);
+            // Remove the components
+            for (int i = 0; i < numComponents ; i++)
+                Components.RemoveAt(startIndex);
             Items.RemoveAt(index);
             Keys.RemoveAt(index);
+
+            // Fix the remaining keys
+            for (int i = index; i < Keys.Length; i++)
+            {
+                Keys[i] -= numComponents;
+            }
         }
 
         public int GetItem(int index) => Items[index];
 
         public ItemList GetItems() => new ItemList(Items);
 
-        [Pure] public bool IsEquivelant(ComponentItemList list)
+        [Pure] public bool IsEquivalent(ComponentItemList list)
         {
             bool result = false;
             for (int i = 0; i < list.Items.Length; i++)

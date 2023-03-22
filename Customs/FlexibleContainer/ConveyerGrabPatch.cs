@@ -29,7 +29,7 @@ namespace ApplianceLib.Customs
             if (grab.GrabSpecificType)
             {
                 shouldRemove = false;
-                for (int i = itemCount - 1; i >= 0; i++)
+                for (int i = itemCount - 1; i >= 0; i--)
                 {
                     var item = container.Items.GetItem(i);
                     var components = container.Items[i];

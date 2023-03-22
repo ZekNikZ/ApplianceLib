@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace ApplianceLib.Customs.GDO
 {
-    [Obsolete("Will be removed in version 0.2.0. Use KitchenLib CustomItemGroup instead.", true)]
+    [Obsolete("Will be removed in version 0.3.0. Use KitchenLib CustomItemGroup instead.", true)]
     public abstract class ModItemGroup<T> : CustomItemGroup<T>, IModGDO where T : ItemGroupView
     {
         public abstract override string UniqueNameID { get; }
@@ -40,7 +40,7 @@ namespace ApplianceLib.Customs.GDO
         protected virtual void Modify(ItemGroup itemGroup) { }
     }
 
-    [Obsolete("Will be removed in version 0.2.0. Use KitchenLib CustomItem instead.", true)]
+    [Obsolete("Will be removed in version 0.3.0. Use KitchenLib CustomItem instead.", true)]
     public abstract class ModItemGroup: ModItemGroup<DummyItemGroupView>
     {
 

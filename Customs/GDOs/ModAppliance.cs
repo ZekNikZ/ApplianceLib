@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ApplianceLib.Customs.GDO
 {
-    [Obsolete("Will be removed in version 0.2.0. Use KitchenLib CustomAppliance instead.", true)]
+    [Obsolete("Will be removed in version 0.3.0. Use KitchenLib CustomAppliance instead.", true)]
     public abstract class ModAppliance : CustomAppliance, IModGDO
     {
         public abstract override string UniqueNameID { get; }

@@ -21,7 +21,7 @@ namespace ApplianceLib
     {
         public const string MOD_GUID = "io.zkz.plateup.appliancelib";
         public const string MOD_NAME = "ApplianceLib";
-        public const string MOD_VERSION = "0.1.1";
+        public const string MOD_VERSION = "0.2.0";
         public const string MOD_AUTHOR = "ZekNikZ";
         public const string MOD_GAMEVERSION = ">=1.1.3";
 
@@ -219,7 +219,7 @@ namespace ApplianceLib
                 var prefab = dishwasher.Prefab;
                 Object.Destroy(prefab.GetComponent<LimitedItemSourceView>());
                 Object.Destroy(prefab.GetComponent<LimitedItemSourceLightsView>());
-                var flexible = prefab.AddComponent<FlexibleContainerView>();
+                var flexible = prefab.AddComponent<FlexibleColorableContainerView>();
                 var dishwasherChild = prefab.GetChild("DishWasher");
                 var dishes = dishwasherChild.GetChild("Door/Dishes");
                 for (int i = 0; i < dishes.GetChildCount(); i++)
@@ -227,24 +227,15 @@ namespace ApplianceLib
                     Object.Destroy(dishes.GetChild(i).GetChild(0));
                     flexible.Transforms.Add(dishes.transform.GetChild(i));
                 }
-                // TODO: re-add this when I rework FlexibleLightsView
-                //var flexible = prefab.AddComponent<FlexibleContainerLightsView>();
-                //var dishwasherChild = prefab.GetChild("DishWasher");
-                //var dishes = dishwasherChild.GetChild("Door/Dishes");
-                //for (int i = 0; i < dishes.GetChildCount(); i++)
-                //{
-                //    Object.Destroy(dishes.GetChild(i).GetChild(0));
-                //    flexible.Transforms.Add(dishes.transform.GetChild(i));
-                //}
-                //for (int i = 0; i < dishwasherChild.GetChildCount(); i++)
-                //{
-                //    var child = dishwasherChild.GetChild(i);
-                //    if (!child.name.Contains("Socket") && child.name.Contains("Light"))
-                //    {
-                //        flexible.Lights.Add(child.GetComponent<MeshRenderer>());
-                //    }
-                //}
-                //flexible.ProcessID = ProcessReferences.Clean;
+                for (int i = 0; i < dishwasherChild.GetChildCount(); i++)
+                {
+                    var child = dishwasherChild.GetChild(i);
+                    if (!child.name.Contains("Socket") && child.name.Contains("Light"))
+                    {
+                        flexible.Renderers.Add(child.GetComponent<MeshRenderer>());
+                    }
+                }
+                flexible.ProcessID = ProcessReferences.Clean;
                 #endregion
             };
             Events.BuildGameDataEvent += ApplianceGroups.BuildGameDataEventCallback;

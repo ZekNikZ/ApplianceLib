@@ -4,7 +4,7 @@ using System;
 
 namespace ApplianceLib.Customs.GDO
 {
-    [Obsolete("Will be removed in version 0.2.0. Use KitchenLib CustomProcess instead.", true)]
+    [Obsolete("Will be removed in version 0.3.0. Use KitchenLib CustomProcess instead.", true)]
     public abstract class ModProcess : CustomProcess, IModGDO
     {
         public abstract override string UniqueNameID { get; }

@@ -4,7 +4,7 @@ using System;
 
 namespace ApplianceLib.Customs.GDO
 {
-    [Obsolete("Will be removed in version 0.2.0. Use KitchenLib CustomUnlockCard instead.", true)]
+    [Obsolete("Will be removed in version 0.3.0. Use KitchenLib CustomUnlockCard instead.", true)]
     public abstract class ModUnlockCard : CustomUnlockCard, IModGDO
     {
         public abstract override string UniqueNameID { get; }

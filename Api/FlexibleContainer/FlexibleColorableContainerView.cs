@@ -5,40 +5,39 @@ using UnityEngine;
 
 namespace ApplianceLib.Api
 {
-    public class FlexibleContainerLightsView : FlexibleContainerView
+    public class FlexibleColorableContainerView : FlexibleContainerView
     {
-        public List<MeshRenderer> Lights = new();
+        public List<MeshRenderer> Renderers = new();
+        public Color PresentProcessedMaterial = Color.green;
+        public Color PresentUnprocessedMaterial = Color.red;
+        public Color AbsentMaterial = new(0.05f, 0.05f, 0.05f, 1f);
         public int ProcessID = 0;
 
         protected override void UpdateData(ViewData data)
         {
             base.UpdateData(data);
-            if (Lights != null)
+            if (Renderers != null)
             {
-                for (int i = 0; i < Lights.Count; i++)
+                for (int i = 0; i < Renderers.Count; i++)
                 {
                     if (data.Items.Count <= i)
                     {
-                        Lights[i].material.color = InactiveColor;
+                        Renderers[i].material.color = AbsentMaterial;
                     }
                     else
                     {
                         if (ProcessID != 0 && GameData.Main.TryGet<Item>(data.Items[i], out var item))
                         {
                             var hasProcess = item.DerivedProcesses.Any(p => p.Process.ID == ProcessID);
-                            Lights[i].material.color = hasProcess ? ActiveUnprocessedColor : ActiveMiscColor;
+                            Renderers[i].material.color = hasProcess ? PresentUnprocessedMaterial : PresentProcessedMaterial;
                         }
                         else
                         {
-                            Lights[i].material.color = ActiveUnprocessedColor;
+                            Renderers[i].material.color = PresentUnprocessedMaterial;
                         }
                     }
                 }
             }
         }
-
-        private static Color ActiveMiscColor = Color.green;
-        private static Color ActiveUnprocessedColor = Color.red;
-        private static Color InactiveColor = new Color(0.05f, 0.05f, 0.05f, 1f);
     }
 }
