@@ -9,7 +9,7 @@ using Unity.Entities;
 namespace ApplianceLib.Customs
 {
     [UpdateInGroup(typeof(ItemTransferAccept))]
-    public class AcceptIntoFlexible : TransferAcceptSystem, IModSystem
+    internal class AcceptIntoFlexible : TransferAcceptSystem, IModSystem
     {
         private EntityQuery proposalQuery;
         protected override void Initialise()

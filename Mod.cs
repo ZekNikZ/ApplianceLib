@@ -219,7 +219,7 @@ namespace ApplianceLib
                 var prefab = dishwasher.Prefab;
                 Object.Destroy(prefab.GetComponent<LimitedItemSourceView>());
                 Object.Destroy(prefab.GetComponent<LimitedItemSourceLightsView>());
-                var flexible = prefab.AddComponent<FlexibleContainerLightsView>();
+                var flexible = prefab.AddComponent<FlexibleContainerView>();
                 var dishwasherChild = prefab.GetChild("DishWasher");
                 var dishes = dishwasherChild.GetChild("Door/Dishes");
                 for (int i = 0; i < dishes.GetChildCount(); i++)
@@ -227,15 +227,24 @@ namespace ApplianceLib
                     Object.Destroy(dishes.GetChild(i).GetChild(0));
                     flexible.Transforms.Add(dishes.transform.GetChild(i));
                 }
-                for (int i = 0; i < dishwasherChild.GetChildCount(); i++)
-                {
-                    var child = dishwasherChild.GetChild(i);
-                    if (!child.name.Contains("Socket") && child.name.Contains("Light"))
-                    {
-                        flexible.Lights.Add(child.GetComponent<MeshRenderer>());
-                    }
-                }
-                flexible.ProcessID = ProcessReferences.Clean;
+                // TODO: re-add this when I rework FlexibleLightsView
+                //var flexible = prefab.AddComponent<FlexibleContainerLightsView>();
+                //var dishwasherChild = prefab.GetChild("DishWasher");
+                //var dishes = dishwasherChild.GetChild("Door/Dishes");
+                //for (int i = 0; i < dishes.GetChildCount(); i++)
+                //{
+                //    Object.Destroy(dishes.GetChild(i).GetChild(0));
+                //    flexible.Transforms.Add(dishes.transform.GetChild(i));
+                //}
+                //for (int i = 0; i < dishwasherChild.GetChildCount(); i++)
+                //{
+                //    var child = dishwasherChild.GetChild(i);
+                //    if (!child.name.Contains("Socket") && child.name.Contains("Light"))
+                //    {
+                //        flexible.Lights.Add(child.GetComponent<MeshRenderer>());
+                //    }
+                //}
+                //flexible.ProcessID = ProcessReferences.Clean;
                 #endregion
             };
             Events.BuildGameDataEvent += ApplianceGroups.BuildGameDataEventCallback;

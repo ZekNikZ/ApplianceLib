@@ -9,7 +9,7 @@ using Unity.Entities;
 
 namespace ApplianceLib.Customs
 {
-    public class ApplyProcessesToFlexibleAfterDuration : GameSystemBase, IModSystem
+    internal class ApplyProcessesToFlexibleAfterDuration : GameSystemBase, IModSystem
     {
         private EntityQuery query;
         protected override void Initialise()

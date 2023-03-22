@@ -6,7 +6,7 @@ using Unity.Entities;
 
 namespace ApplianceLib.Customs
 {
-    public class ResetFlexibleNight : StartOfNightSystem, IModSystem
+    internal class ResetFlexibleNight : StartOfNightSystem, IModSystem
     {
         private EntityQuery Query;
         protected override void Initialise()

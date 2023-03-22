@@ -7,7 +7,7 @@ using Unity.Entities;
 namespace ApplianceLib.Customs
 {
     [UpdateInGroup(typeof(ItemTransferPropose))]
-    public class TakeFromFlexible : TransferInteractionProposalSystem, IModSystem
+    internal class TakeFromFlexible : TransferInteractionProposalSystem, IModSystem
     {
         protected override void Initialise()
         {

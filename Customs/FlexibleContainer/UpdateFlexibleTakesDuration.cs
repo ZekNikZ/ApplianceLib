@@ -11,7 +11,7 @@ using Unity.Entities;
 namespace ApplianceLib.Customs
 {
     [UpdateInGroup(typeof(DurationLocks))]
-    public class UpdateFlexibleTakesDuration : GameSystemBase, IModSystem
+    internal class UpdateFlexibleTakesDuration : GameSystemBase, IModSystem
     {
         private EntityQuery query;
         protected override void Initialise()
