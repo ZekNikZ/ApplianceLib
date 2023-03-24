@@ -11,6 +11,11 @@ namespace ApplianceLib.Api
 {
     public class FlexibleContainerView : UpdatableObjectView<FlexibleContainerView.ViewData>
     {
+        [SerializeField]
+        public List<Transform> Transforms = new();
+
+        private List<GameObject> Items = new();
+
         protected override void UpdateData(ViewData data)
         {
             foreach (var item in Items)
@@ -30,9 +35,6 @@ namespace ApplianceLib.Api
                 Items.Add(duped);
             }
         }
-
-        private List<GameObject> Items = new();
-        public List<Transform> Transforms = new();
 
         private class UpdateView : IncrementalViewSystemBase<ViewData>, IModSystem
         {

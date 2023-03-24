@@ -7,10 +7,19 @@ namespace ApplianceLib.Api
 {
     public class FlexibleColorableContainerView : FlexibleContainerView
     {
+        [SerializeField]
         public List<MeshRenderer> Renderers = new();
+
+        [SerializeField]
         public Color PresentProcessedMaterial = Color.green;
+
+        [SerializeField]
         public Color PresentUnprocessedMaterial = Color.red;
+
+        [SerializeField]
         public Color AbsentMaterial = new(0.05f, 0.05f, 0.05f, 1f);
+
+        [SerializeField]
         public int ProcessID = 0;
 
         protected override void UpdateData(ViewData data)
