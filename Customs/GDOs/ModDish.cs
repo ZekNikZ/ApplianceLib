@@ -1,9 +1,11 @@
 ﻿using KitchenData;
 using KitchenLib.Customs;
+using System;
 using UnityEngine;
 
 namespace ApplianceLib.Customs.GDO
 {
+    [Obsolete("Will be removed in version 0.3.0. Use KitchenLib CustomDish instead.", true)]
     public abstract class ModDish : CustomDish, IModGDO
     {
         public abstract override string UniqueNameID { get; }

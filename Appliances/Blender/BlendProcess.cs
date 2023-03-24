@@ -1,14 +1,14 @@
 ﻿using ApplianceLib.Api;
 using ApplianceLib.Api.References;
-using ApplianceLib.Customs.GDO;
 using KitchenData;
+using KitchenLib.Customs;
 using KitchenLib.Utils;
 using System.Collections.Generic;
 using static ApplianceLib.Api.References.ApplianceLibGDOs;
 
 namespace ApplianceLib.Appliances.Blender
 {
-    public class BlendProcess : ModProcess
+    public class BlendProcess : CustomProcess
     {
         public override string UniqueNameID => Ids.BlendProcess;
         public override GameDataObject BasicEnablingAppliance => Refs.Blender;
@@ -19,7 +19,7 @@ namespace ApplianceLib.Appliances.Blender
             (Locale.English, LocalisationUtils.CreateProcessInfo("Blend", "<sprite name=\"blend\">"))
         };
 
-        protected override void Modify(Process process)
+        public override void OnRegister(Process process)
         {
             RestrictedItemTransfers.AllowProcessableItems(RestrictedTransferKeys.Blender, process);
         }

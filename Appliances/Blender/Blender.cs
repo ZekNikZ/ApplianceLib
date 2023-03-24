@@ -5,13 +5,14 @@ using KitchenLib.Utils;
 using System.Collections.Generic;
 using UnityEngine;
 using ApplianceLib.Api;
-using ApplianceLib.Customs.GDO;
 using ApplianceLib.Api.References;
 using static ApplianceLib.Api.References.ApplianceLibGDOs;
+using ApplianceLib.Api.Prefab;
+using KitchenLib.Customs;
 
 namespace ApplianceLib.Appliances.Blender
 {
-    public class Blender : ModAppliance
+    public class Blender : CustomAppliance
     {
         public override string UniqueNameID => Ids.BlenderAppliance;
         public override GameObject Prefab => Prefabs.Find("Blender");
@@ -50,17 +51,17 @@ namespace ApplianceLib.Appliances.Blender
             }
         };
 
-        protected override void SetupPrefab(GameObject prefab)
+        public override void SetupPrefab(GameObject prefab)
         {
             // Materials
-            prefab.SetupMaterialsLikeCounter();
-            prefab.ApplyMaterialToChild("BlenderModel/Base", MaterialHelpers.GetMaterialArray("Plastic - Red", "Plastic - Red", "Metal", "Metal"));
-            prefab.ApplyMaterialToChild("BlenderModel/Blade", MaterialHelpers.GetMaterialArray("Metal Black"));
-            prefab.ApplyMaterialToChild("BlenderModel/Lid", MaterialHelpers.GetMaterialArray("Plastic - Red", "Metal", "Metal"));
-            prefab.ApplyMaterialToChild("HoldPoint/BlenderCup/Cup", MaterialHelpers.GetMaterialArray("Door Glass", "Door Glass", "Door Glass"));
+            prefab.AttachCounter(CounterType.Drawers);
+            prefab.ApplyMaterialToChild("BlenderModel/Base", MaterialUtils.GetMaterialArray("Plastic - Red", "Plastic - Red", "Metal", "Metal"));
+            prefab.ApplyMaterialToChild("BlenderModel/Blade", MaterialUtils.GetMaterialArray("Metal Black"));
+            prefab.ApplyMaterialToChild("BlenderModel/Lid", MaterialUtils.GetMaterialArray("Plastic - Red", "Metal", "Metal"));
+            prefab.ApplyMaterialToChild("HoldPoint/BlenderCup/Cup", MaterialUtils.GetMaterialArray("Door Glass", "Door Glass", "Door Glass"));
 
             // Hold point
-            var holdTransform = prefab.GetChildFromPath("HoldPoint").transform;
+            var holdTransform = prefab.GetChild("HoldPoint").transform;
             var holdPoint = prefab.AddComponent<HoldPointContainer>();
             holdPoint.HoldPoint = holdTransform;
 

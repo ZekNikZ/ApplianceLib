@@ -4,14 +4,14 @@ using KitchenData;
 using KitchenLib.Utils;
 using System.Collections.Generic;
 using UnityEngine;
-using ApplianceLib.Customs.GDO;
 using ApplianceLib.Api.References;
 using static ApplianceLib.Api.References.ApplianceLibGDOs;
-using ApplianceLib.Api;
+using ApplianceLib.Api.Prefab;
+using KitchenLib.Customs;
 
 namespace ApplianceLib.Appliances.MixingBowl
 {
-    public class MixingBowlProvider : ModAppliance
+    public class MixingBowlProvider : CustomAppliance
     {
         public override string UniqueNameID => Ids.MixingBowlSource;
         public override GameObject Prefab => Prefabs.Find("MixingBowlProvider");
@@ -29,13 +29,13 @@ namespace ApplianceLib.Appliances.MixingBowl
             KitchenPropertiesUtils.GetCItemProvider(Refs.MixingBowl.ID, 1, 1, false, false, true, false, false, true, false)
         };
 
-        protected override void SetupPrefab(GameObject prefab)
+        public override void SetupPrefab(GameObject prefab)
         {
-            prefab.SetupMaterialsLikeCounter();
+            prefab.AttachCounter(CounterType.Drawers);
 
             prefab.ApplyMaterialToChild("HoldPoint/MixingBowl/Model", MaterialReferences.MixingBowl);
 
-            var holdTransform = prefab.GetChildFromPath("HoldPoint").transform;
+            var holdTransform = prefab.GetChild("HoldPoint").transform;
             var holdPoint = prefab.AddComponent<HoldPointContainer>();
             holdPoint.HoldPoint = holdTransform;
 

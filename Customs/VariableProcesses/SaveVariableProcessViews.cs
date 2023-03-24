@@ -37,7 +37,7 @@ namespace ApplianceLib.Customs.VariableProcesses
             Positions.AddRange(cPositions);
         }
 
-        public override void AfterLoading()
+        public override void AfterLoading(SaveSystemType systemType)
         {
             if (Containers == null || Positions == null)
             {

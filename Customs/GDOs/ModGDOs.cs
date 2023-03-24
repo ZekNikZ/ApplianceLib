@@ -1,5 +1,6 @@
 ﻿using ApplianceLib.Customs.GDO;
 using KitchenLib;
+using KitchenLib.Customs;
 using System.Reflection;
 
 namespace ApplianceLib.Customs
@@ -17,7 +18,7 @@ namespace ApplianceLib.Customs
                     continue;
                 }
 
-                if (typeof(IModGDO).IsAssignableFrom(type) && !typeof(IPreventRegistration).IsAssignableFrom(type))
+                if (typeof(CustomGameDataObject).IsAssignableFrom(type) && !typeof(IPreventRegistration).IsAssignableFrom(type))
                 {
                     MethodInfo generic = mAddGameDataObject.MakeGenericMethod(type);
                     generic.Invoke(mod, null);
