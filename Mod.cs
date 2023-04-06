@@ -21,7 +21,7 @@ namespace ApplianceLib
     {
         public const string MOD_GUID = "io.zkz.plateup.appliancelib";
         public const string MOD_NAME = "ApplianceLib";
-        public const string MOD_VERSION = "0.2.0";
+        public const string MOD_VERSION = "0.2.1";
         public const string MOD_AUTHOR = "ZekNikZ";
         public const string MOD_GAMEVERSION = ">=1.1.3";
 
@@ -78,10 +78,12 @@ namespace ApplianceLib
             }
 
             // Register custom GDOs
-            AddGameData();
+            // TODO: reenable this when flicker is fixed
+            //AddGameData();
 
             // Load process icons
-            AddProcessIcons();
+            // TODO: reenable this when flicker is fixed
+            //AddProcessIcons();
 
             // Perform actions when game data is built
             Events.BuildGameDataEvent += delegate (object s, BuildGameDataEventArgs args)
@@ -93,21 +95,22 @@ namespace ApplianceLib
                 RestrictedTransferKeys.Setup(args.gamedata);
 
                 // Update Tomato Recipe
-                Item tomato = (Item)GDOUtils.GetExistingGDO(ItemReferences.Tomato);
-                tomato.DerivedProcesses.Add(new Item.ItemProcess
-                {
-                    Process = Refs.BlendProcess,
-                    Duration = 2,
-                    Result = (Item)GDOUtils.GetExistingGDO(ItemReferences.TomatoSauce)
-                });
+                // TODO: reenable this when flicker is fixed
+                //Item tomato = (Item)GDOUtils.GetExistingGDO(ItemReferences.Tomato);
+                //tomato.DerivedProcesses.Add(new Item.ItemProcess
+                //{
+                //    Process = Refs.BlendProcess,
+                //    Duration = 2,
+                //    Result = (Item)GDOUtils.GetExistingGDO(ItemReferences.TomatoSauce)
+                //});
 
-                Item turkey = (Item)GDOUtils.GetExistingGDO(ItemReferences.TurkeyIngredient);
-                turkey.DerivedProcesses.Add(new Item.ItemProcess
-                {
-                    Process = (Process)GDOUtils.GetExistingGDO(ProcessReferences.Clean),
-                    Duration = 2,
-                    Result = (Item)GDOUtils.GetExistingGDO(ItemReferences.TomatoSauce)
-                });
+                //Item turkey = (Item)GDOUtils.GetExistingGDO(ItemReferences.TurkeyIngredient);
+                //turkey.DerivedProcesses.Add(new Item.ItemProcess
+                //{
+                //    Process = (Process)GDOUtils.GetExistingGDO(ProcessReferences.Clean),
+                //    Duration = 2,
+                //    Result = (Item)GDOUtils.GetExistingGDO(ItemReferences.TomatoSauce)
+                //});
 
                 LogInfo("Updating wash basin.");
 
