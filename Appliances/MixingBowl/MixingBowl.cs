@@ -1,4 +1,5 @@
 ﻿using ApplianceLib.Api.Prefab;
+using ApplianceLib.Customs.GDO;
 using ApplianceLib.Util;
 using KitchenData;
 using KitchenLib.Customs;
@@ -7,7 +8,7 @@ using static ApplianceLib.Api.References.ApplianceLibGDOs;
 
 namespace ApplianceLib.Appliances.MixingBowl
 {
-    public class MixingBowl : CustomItem
+    public class MixingBowl : CustomItem, IPreventRegistration
     {
         public override string UniqueNameID => Ids.MixingBowl;
         public override GameObject Prefab => Prefabs.Create("MixingBowl");

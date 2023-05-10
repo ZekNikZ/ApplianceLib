@@ -21,7 +21,7 @@ namespace ApplianceLib
     {
         public const string MOD_GUID = "io.zkz.plateup.appliancelib";
         public const string MOD_NAME = "ApplianceLib";
-        public const string MOD_VERSION = "0.2.2";
+        public const string MOD_VERSION = "0.3.0";
         public const string MOD_AUTHOR = "ZekNikZ";
         public const string MOD_GAMEVERSION = ">=1.1.3";
 
@@ -53,8 +53,8 @@ namespace ApplianceLib
         {
             Bundle.LoadAllAssets<Texture2D>();
             Bundle.LoadAllAssets<Sprite>();
+
             var spriteAsset = Bundle.LoadAsset<TMP_SpriteAsset>("blend");
-            Mod.LogInfo(spriteAsset);
             TMP_Settings.defaultSpriteAsset.fallbackSpriteAssets.Add(spriteAsset);
             spriteAsset.material = Object.Instantiate(TMP_Settings.defaultSpriteAsset.material);
             spriteAsset.material.mainTexture = Bundle.LoadAsset<Texture2D>("blendTex");
@@ -79,38 +79,37 @@ namespace ApplianceLib
 
             // Register custom GDOs
             // TODO: reenable this when flicker is fixed
-            //AddGameData();
+            AddGameData();
 
             // Load process icons
             // TODO: reenable this when flicker is fixed
-            //AddProcessIcons();
+            AddProcessIcons();
 
             // Perform actions when game data is built
             Events.BuildGameDataEvent += delegate (object s, BuildGameDataEventArgs args)
             {
+                // TODO: remove
+                Item pinkFish = (Item)GDOUtils.GetExistingGDO(ItemReferences.FishPinkRaw);
+                pinkFish.DerivedProcesses.Add(new Item.ItemProcess
+                {
+                    Process = (Process)GDOUtils.GetExistingGDO(ProcessReferences.Clean),
+                    Duration = 2,
+                    Result = (Item)GDOUtils.GetExistingGDO(ItemReferences.FishPinkFried)
+                });
+
+                Item turkey = (Item)GDOUtils.GetExistingGDO(ItemReferences.TurkeyIngredient);
+                turkey.DerivedProcesses.Add(new Item.ItemProcess
+                {
+                    Process = Refs.BlendProcess,
+                    Duration = 2,
+                    Result = (Item)GDOUtils.GetExistingGDO(ItemReferences.TurkeyCooked)
+                });
+
                 if (!args.firstBuild)
                     return;
 
                 // Custom Restricted Items
                 RestrictedTransferKeys.Setup(args.gamedata);
-
-                // Update Tomato Recipe
-                // TODO: reenable this when flicker is fixed
-                //Item tomato = (Item)GDOUtils.GetExistingGDO(ItemReferences.Tomato);
-                //tomato.DerivedProcesses.Add(new Item.ItemProcess
-                //{
-                //    Process = Refs.BlendProcess,
-                //    Duration = 2,
-                //    Result = (Item)GDOUtils.GetExistingGDO(ItemReferences.TomatoSauce)
-                //});
-
-                //Item turkey = (Item)GDOUtils.GetExistingGDO(ItemReferences.TurkeyIngredient);
-                //turkey.DerivedProcesses.Add(new Item.ItemProcess
-                //{
-                //    Process = (Process)GDOUtils.GetExistingGDO(ProcessReferences.Clean),
-                //    Duration = 2,
-                //    Result = (Item)GDOUtils.GetExistingGDO(ItemReferences.TomatoSauce)
-                //});
 
                 LogInfo("Updating wash basin.");
 
@@ -171,8 +170,12 @@ namespace ApplianceLib
                 Object.Destroy(washBasin.Prefab.GetComponent<LimitedItemSourceView>());
                 var view = washBasin.Prefab.AddComponent<FlexibleContainerView>();
                 for (int i = 0; i < washBasin.Prefab.GetChildCount(); i++)
+                {
                     if (washBasin.Prefab.GetChild(i).name.ToLower().Contains("holdpoint"))
-                        view.Transforms.Add(washBasin.Prefab.transform.GetChild(i));
+                    {
+                        view.Items.Add(washBasin.Prefab.GetChild(i).gameObject);
+                    }
+                }
                 #endregion
 
                 #region Update Dishwasher
@@ -228,7 +231,7 @@ namespace ApplianceLib
                 for (int i = 0; i < dishes.GetChildCount(); i++)
                 {
                     Object.Destroy(dishes.GetChild(i).GetChild(0));
-                    flexible.Transforms.Add(dishes.transform.GetChild(i));
+                    flexible.Items.Add(dishes.transform.GetChild(i).gameObject);
                 }
                 for (int i = 0; i < dishwasherChild.GetChildCount(); i++)
                 {

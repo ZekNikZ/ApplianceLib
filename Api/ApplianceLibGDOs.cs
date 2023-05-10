@@ -15,6 +15,7 @@ namespace ApplianceLib.Api.References
             public const string ModId = Mod.MOD_GUID;
 
             public const string BlenderAppliance = "BlenderAppliance";
+            public const string AutoBlenderAppliance = "AutoBlenderAppliance";
             public const string BlenderCup = "BlenderCup";
             public const string BlendProcess = "BlendProcess";
 

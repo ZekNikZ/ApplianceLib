@@ -8,10 +8,11 @@ using ApplianceLib.Api.References;
 using static ApplianceLib.Api.References.ApplianceLibGDOs;
 using ApplianceLib.Api.Prefab;
 using KitchenLib.Customs;
+using ApplianceLib.Customs.GDO;
 
 namespace ApplianceLib.Appliances.MixingBowl
 {
-    public class MixingBowlProvider : CustomAppliance
+    public class MixingBowlProvider : CustomAppliance, IPreventRegistration
     {
         public override string UniqueNameID => Ids.MixingBowlSource;
         public override GameObject Prefab => Prefabs.Find("MixingBowlProvider");

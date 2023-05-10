@@ -1,4 +1,5 @@
-﻿using KitchenData;
+﻿using ApplianceLib.Api.Miscellaneous;
+using KitchenData;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -25,17 +26,21 @@ namespace ApplianceLib.Api
         protected override void UpdateData(ViewData data)
         {
             base.UpdateData(data);
+
+            ComponentItemList items = data.Data;
+
             if (Renderers != null)
             {
                 for (int i = 0; i < Renderers.Count; i++)
                 {
-                    if (data.Items.Count <= i)
+                    if (items.Count <= i)
                     {
                         Renderers[i].material.color = AbsentMaterial;
                     }
                     else
                     {
-                        if (ProcessID != 0 && GameData.Main.TryGet<Item>(data.Items[i], out var item))
+
+                        if (ProcessID != 0 && GameData.Main.TryGet<Item>(items.GetItem(i), out var item))
                         {
                             var hasProcess = item.DerivedProcesses.Any(p => p.Process.ID == ProcessID);
                             Renderers[i].material.color = hasProcess ? PresentUnprocessedMaterial : PresentProcessedMaterial;

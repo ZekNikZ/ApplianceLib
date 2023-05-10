@@ -12,29 +12,22 @@ using KitchenLib.Customs;
 
 namespace ApplianceLib.Appliances.Blender
 {
-    public class Blender : CustomAppliance
+    public class AutoBlender : CustomAppliance
     {
-        public override string UniqueNameID => Ids.BlenderAppliance;
-        public override GameObject Prefab => Prefabs.Find("Blender", "Base");
-        public override PriceTier PriceTier => PriceTier.Medium;
+        public override string UniqueNameID => Ids.AutoBlenderAppliance;
+        public override GameObject Prefab => Prefabs.Find("Blender", "Auto");
+        public override PriceTier PriceTier => PriceTier.Expensive;
         public override bool SellOnlyAsDuplicate => true;
-        public override bool IsPurchasable => true;
+        public override bool IsPurchasableAsUpgrade => true;
         public override ShoppingTags ShoppingTags => ShoppingTags.Cooking | ShoppingTags.Misc;
         public override List<(Locale, ApplianceInfo)> InfoList => new()
         {
-            (Locale.English, LocalisationUtils.CreateApplianceInfo("Blender", "Blends ingredients together", new(), new()))
+            (Locale.English, LocalisationUtils.CreateApplianceInfo("Auto Blender", "Blends ingredients together", new(), new()))
         };
         public override List<IApplianceProperty> Properties => new()
         {
             new CItemHolder(),
             KitchenPropertiesUtils.GetCItemProvider(Refs.BlenderCup.ID, 1, 1, false, false, true, false, false, true, false),
-            new CRequiresActivation(),
-            new CIsInactive(),
-            new CItemTransferRestrictions
-            {
-                AllowWhenActive = false,
-                AllowWhenInactive = true
-            },
             new CRestrictedReceiver
             {
                 ApplianceKey = RestrictedTransferKeys.Blender
@@ -55,9 +48,9 @@ namespace ApplianceLib.Appliances.Blender
         {
             // Materials
             prefab.AttachCounter(CounterType.Drawers);
-            prefab.ApplyMaterialToChild("BlenderModel/Base", MaterialUtils.GetMaterialArray("Plastic - Red", "Plastic - Red", "Metal", "Metal"));
+            prefab.ApplyMaterialToChild("BlenderModel/Base", MaterialUtils.GetMaterialArray("Plastic - Blue", "Plastic - Blue", "Metal", "Metal"));
             prefab.ApplyMaterialToChild("BlenderModel/Blade", MaterialUtils.GetMaterialArray("Metal Black"));
-            prefab.ApplyMaterialToChild("BlenderModel/Lid", MaterialUtils.GetMaterialArray("Plastic - Red", "Metal", "Metal"));
+            prefab.ApplyMaterialToChild("BlenderModel/Lid", MaterialUtils.GetMaterialArray("Plastic - Blue", "Metal", "Metal"));
             prefab.ApplyMaterialToChild("HoldPoint/BlenderCup/Cup", MaterialUtils.GetMaterialArray("Door Glass", "Door Glass", "Door Glass"));
 
             // Hold point
@@ -76,6 +69,7 @@ namespace ApplianceLib.Appliances.Blender
             // Animations
             var processView = prefab.AddComponent<ApplianceProcessView>();
             processView.HeldItemPosition = holdTransform;
+            prefab.GetComponent<Animator>().runtimeAnimatorController = Mod.Bundle.LoadAsset<RuntimeAnimatorController>("AutoBlenderAnimator");
             ReflectionUtils.GetField<ApplianceProcessView>("Animator").SetValue(processView, prefab.GetComponent<Animator>());
         }
     }

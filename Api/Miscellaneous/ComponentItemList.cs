@@ -6,10 +6,54 @@ using Unity.Collections;
 
 namespace ApplianceLib.Api.Miscellaneous
 {
-    [MessagePackObject(false)]
-    [MessagePackFormatter(typeof(ComponentItemListFormatter))]
     public struct ComponentItemList
     {
+        [MessagePackObject(false)]
+        public struct MessagePackSurrogate
+        {
+            [Key(0)]
+            public int[] Items;
+
+            [Key(1)]
+            public int[] Components;
+
+            [Key(2)]
+            public int[] Keys;
+
+            public static implicit operator MessagePackSurrogate(ComponentItemList v)
+            {
+                return new()
+                {
+                    Items = v.Items.ToArray(),
+                    Components = v.Components.ToArray(),
+                    Keys = v.Keys.ToArray(),
+                };
+            }
+
+            // Token: 0x060000C1 RID: 193 RVA: 0x00003AE8 File Offset: 0x00001CE8
+            public static implicit operator ComponentItemList(MessagePackSurrogate v)
+            {
+                ComponentItemList itemList = new();
+
+                foreach (int item in v.Items)
+                {
+                    itemList.Items.Add(item);
+                }
+
+                foreach (int component in v.Components)
+                {
+                    itemList.Components.Add(component);
+                }
+
+                foreach (int key in v.Keys)
+                {
+                    itemList.Keys.Add(key);
+                }
+
+                return itemList;
+            }
+        }
+
         public void Add(int item, ItemList components)
         {
             Keys.Add(Components.Length);
@@ -50,16 +94,29 @@ namespace ApplianceLib.Api.Miscellaneous
 
         public int GetItem(int index) => Items[index];
 
-        public ItemList GetItems() => new ItemList(Items);
+        public ItemList GetItems() => new(Items);
 
         [Pure] public bool IsEquivalent(ComponentItemList list)
         {
+            if (Items.Length != list.Items.Length)
+            {
+                return false;
+            }
+
             bool result = false;
             for (int i = 0; i < list.Items.Length; i++)
-                result = (result == true) ? true : (list.Items[i] == Items[i]);
+            {
+                result = result || ((list.Items[i] == Items[i]) && list[i].IsEquivalent(this[i]));
+            }
+
             return result;
         }
 
+        /// <summary>
+        /// Get the components of an item
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         [IgnoreMember] public ItemList this[int index]
         {
             get
@@ -78,7 +135,7 @@ namespace ApplianceLib.Api.Miscellaneous
             }
         }
 
-        [IgnoreMember] public int Count { get => Items.Length; }
+        [IgnoreMember] public int Count => Items.Length;
 
         [SerializationConstructor]
         public ComponentItemList(FixedListInt64 Items, FixedListInt512 Components, FixedListInt64 Keys)
@@ -88,9 +145,9 @@ namespace ApplianceLib.Api.Miscellaneous
             this.Keys = Keys;
         }
 
-        [Key(0)] private FixedListInt64 Items;
-        [Key(1)] private FixedListInt512 Components;
-        [Key(2)] private FixedListInt64 Keys;
+        private FixedListInt64 Items;
+        private FixedListInt512 Components;
+        private FixedListInt64 Keys;
 
         private class ComponentItemListFormatter : IMessagePackFormatter<ComponentItemList>
         {
