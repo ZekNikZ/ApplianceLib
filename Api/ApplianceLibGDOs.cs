@@ -16,7 +16,9 @@ namespace ApplianceLib.Api.References
 
             public const string BlenderAppliance = "BlenderAppliance";
             public const string AutoBlenderAppliance = "AutoBlenderAppliance";
+            public const string FastBlenderAppliance = "FastBlenderAppliance";
             public const string BlenderCup = "BlenderCup";
+            public const string DirtyBlenderCup = "DirtyBlenderCup";
             public const string BlendProcess = "BlendProcess";
 
             public const string Cup = "Cup";
@@ -32,7 +34,10 @@ namespace ApplianceLib.Api.References
         public class Refs
         {
             public static Appliance Blender => Find<Appliance, Blender>();
+            public static Appliance AutoBlender => Find<Appliance, AutoBlender>();
+            public static Appliance FastBlender => Find<Appliance, FastBlender>();
             public static Item BlenderCup => Find<Item, BlenderCup>();
+            public static Item DirtyBlenderCup => Find<Item, DirtyBlenderCup>();
             public static Process BlendProcess => Find<Process, BlendProcess>();
 
             public static Item Cup => Find<Item, Cup>();

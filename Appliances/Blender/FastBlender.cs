@@ -12,21 +12,21 @@ using KitchenLib.Customs;
 
 namespace ApplianceLib.Appliances.Blender
 {
-    public class Blender : CustomAppliance
+    public class FastBlender : CustomAppliance
     {
-        public override string UniqueNameID => Ids.BlenderAppliance;
-        public override GameObject Prefab => Prefabs.Find("Blender", "Base");
-        public override PriceTier PriceTier => PriceTier.Medium;
+        public override string UniqueNameID => Ids.FastBlenderAppliance;
+        public override GameObject Prefab => Prefabs.Find("Blender", "Fast");
+        public override PriceTier PriceTier => PriceTier.Expensive;
         public override bool SellOnlyAsDuplicate => true;
-        public override bool IsPurchasable => true;
+        public override bool IsPurchasableAsUpgrade => true;
         public override ShoppingTags ShoppingTags => ShoppingTags.Cooking | ShoppingTags.Misc;
         public override List<(Locale, ApplianceInfo)> InfoList => new()
         {
-            (Locale.English, LocalisationUtils.CreateApplianceInfo("Blender", "Blends ingredients together", new(), new()))
+            (Locale.English, LocalisationUtils.CreateApplianceInfo("Fast Blender", "Blends ingredients together", new(), new()))
         };
-        public override List<Appliance> Upgrades => new() { 
-            Refs.AutoBlender,
-            Refs.FastBlender
+        public override List<Appliance> Upgrades => new()
+        {
+            Refs.AutoBlender
         };
         public override List<IApplianceProperty> Properties => new()
         {
@@ -51,7 +51,7 @@ namespace ApplianceLib.Appliances.Blender
             {
                 Process = Refs.BlendProcess,
                 IsAutomatic = true,
-                Speed = 1
+                Speed = 2
             }
         };
 
@@ -59,9 +59,9 @@ namespace ApplianceLib.Appliances.Blender
         {
             // Materials
             prefab.AttachCounter(CounterType.Drawers);
-            prefab.ApplyMaterialToChild("BlenderModel/Base", MaterialUtils.GetMaterialArray("Plastic - Red", "Plastic - Red", "Metal", "Metal"));
+            prefab.ApplyMaterialToChild("BlenderModel/Base", MaterialUtils.GetMaterialArray("Plastic - Yellow", "Plastic - Yellow", "Metal", "Metal"));
             prefab.ApplyMaterialToChild("BlenderModel/Blade", MaterialUtils.GetMaterialArray("Metal Black"));
-            prefab.ApplyMaterialToChild("BlenderModel/Lid", MaterialUtils.GetMaterialArray("Plastic - Red", "Metal", "Metal"));
+            prefab.ApplyMaterialToChild("BlenderModel/Lid", MaterialUtils.GetMaterialArray("Plastic - Yellow", "Metal", "Metal"));
             prefab.ApplyMaterialToChild("HoldPoint/BlenderCup/Cup", MaterialUtils.GetMaterialArray("Door Glass", "Door Glass", "Door Glass"));
 
             // Hold point

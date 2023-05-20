@@ -1,6 +1,7 @@
 ﻿using ApplianceLib.Api.References;
 using ApplianceLib.Util;
 using KitchenLib.Utils;
+using System;
 using System.Reflection;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ namespace ApplianceLib.Api.Prefab
         /// </summary>
         /// <param name="uniqueId">The unique ID to assign to this prefab. Reuse this ID to reference the same prefab as generated earlier.</param>
         /// <returns>The new empty prefab or cached existing prefab.</returns>
+        [Obsolete("This method causes some errors, use other methods.", true)]
         public static GameObject CreateEmptyPrefab(string uniqueId)
         {
             return Prefabs.Create($"{uniqueId} (PrefabBuilder) ({Assembly.GetCallingAssembly().FullName})");
@@ -42,6 +44,7 @@ namespace ApplianceLib.Api.Prefab
             child.ApplyMaterialToChild("Model", MaterialReferences.MixingBowl);
         }
 
+        [Obsolete("This method causes some errors, use other methods.", true)]
         public static void AttachBlenderCup(this GameObject parent)
         {
             var child = parent.AttachPrefabAsChild(Prefabs.Find("BlenderCup"));

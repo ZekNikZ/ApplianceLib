@@ -12,7 +12,7 @@ namespace ApplianceLib.Appliances.Blender
     {
         public override string UniqueNameID => Ids.BlendProcess;
         public override GameDataObject BasicEnablingAppliance => Refs.Blender;
-        public override int EnablingApplianceCount => 1;
+        public override int EnablingApplianceCount => 2;
         public override bool CanObfuscateProgress => true;
         public override List<(Locale, ProcessInfo)> InfoList => new()
         {

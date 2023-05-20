@@ -21,7 +21,7 @@ namespace ApplianceLib
     {
         public const string MOD_GUID = "io.zkz.plateup.appliancelib";
         public const string MOD_NAME = "ApplianceLib";
-        public const string MOD_VERSION = "0.3.0";
+        public const string MOD_VERSION = "0.3.2";
         public const string MOD_AUTHOR = "ZekNikZ";
         public const string MOD_GAMEVERSION = ">=1.1.3";
 
@@ -88,22 +88,22 @@ namespace ApplianceLib
             // Perform actions when game data is built
             Events.BuildGameDataEvent += delegate (object s, BuildGameDataEventArgs args)
             {
-                // TODO: remove
-                Item pinkFish = (Item)GDOUtils.GetExistingGDO(ItemReferences.FishPinkRaw);
-                pinkFish.DerivedProcesses.Add(new Item.ItemProcess
-                {
-                    Process = (Process)GDOUtils.GetExistingGDO(ProcessReferences.Clean),
-                    Duration = 2,
-                    Result = (Item)GDOUtils.GetExistingGDO(ItemReferences.FishPinkFried)
-                });
+                //// TODO: remove
+                //Item pinkFish = (Item)GDOUtils.GetExistingGDO(ItemReferences.FishPinkRaw);
+                //pinkFish.DerivedProcesses.Add(new Item.ItemProcess
+                //{
+                //    Process = (Process)GDOUtils.GetExistingGDO(ProcessReferences.Clean),
+                //    Duration = 2,
+                //    Result = (Item)GDOUtils.GetExistingGDO(ItemReferences.FishPinkFried)
+                //});
 
-                Item turkey = (Item)GDOUtils.GetExistingGDO(ItemReferences.TurkeyIngredient);
-                turkey.DerivedProcesses.Add(new Item.ItemProcess
-                {
-                    Process = Refs.BlendProcess,
-                    Duration = 2,
-                    Result = (Item)GDOUtils.GetExistingGDO(ItemReferences.TurkeyCooked)
-                });
+                //Item turkey = (Item)GDOUtils.GetExistingGDO(ItemReferences.TurkeyIngredient);
+                //turkey.DerivedProcesses.Add(new Item.ItemProcess
+                //{
+                //    Process = Refs.BlendProcess,
+                //    Duration = 2,
+                //    Result = (Item)GDOUtils.GetExistingGDO(ItemReferences.TurkeyCooked)
+                //});
 
                 if (!args.firstBuild)
                     return;

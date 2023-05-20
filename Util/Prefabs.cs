@@ -1,5 +1,6 @@
 ﻿using KitchenData;
 using KitchenLib.Utils;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,25 +9,30 @@ namespace ApplianceLib.Util
     internal class Prefabs
     {
         private static readonly Dictionary<string, GameObject> PrefabCache = new();
+        private static GameObject parent;
 
         public static GameObject Find(int id)
         {
             return (GDOUtils.GetExistingGDO(id) as IHasPrefab)?.Prefab;
         }
 
+        [Obsolete("This method causes some errors, use other methods.", true)]
         internal static GameObject Create(string name)
         {
             if (!PrefabCache.ContainsKey($"{name}Empty"))
             {
-                var parent = GameObject.Find("Prefabs");
+                //var parent = GameObject.Find("Prefabs");
                 if (parent == null)
                 {
                     parent = new GameObject("Prefabs");
-                    parent.transform.localPosition = Vector3.positiveInfinity;
+                    //parent.transform.localPosition = Vector3.positiveInfinity;
+                    parent.transform.localPosition = Vector3.zero;
+                    parent.SetActive(false);
                 }
 
                 var copy = new GameObject(name);
                 copy.transform.parent = parent.transform;
+                copy.transform.position = Vector3.zero;
                 PrefabCache.Add($"{name}Empty", copy);
             }
 
@@ -46,14 +52,16 @@ namespace ApplianceLib.Util
 
                 if (copyName != "")
                 {
-                    var parent = GameObject.Find("Prefabs");
+                    //var parent = GameObject.Find("Prefabs");
                     if (parent == null)
                     {
                         parent = new GameObject("Prefabs");
-                        parent.transform.localPosition = Vector3.positiveInfinity;
+                        //parent.transform.localPosition = Vector3.positiveInfinity;
+                        parent.transform.localPosition = Vector3.zero;
+                        parent.SetActive(false);
                     }
 
-                    var copy = Object.Instantiate(prefab, parent.transform);
+                    var copy = UnityEngine.Object.Instantiate(prefab, parent.transform);
                     copy.name = name + copyName;
                     PrefabCache.Add(name + copyName, copy);
                 }

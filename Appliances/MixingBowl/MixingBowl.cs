@@ -11,7 +11,7 @@ namespace ApplianceLib.Appliances.MixingBowl
     public class MixingBowl : CustomItem, IPreventRegistration
     {
         public override string UniqueNameID => Ids.MixingBowl;
-        public override GameObject Prefab => Prefabs.Create("MixingBowl");
+        public override GameObject Prefab => null;
         public override Appliance DedicatedProvider => Refs.MixingBowlProvider;
         public override bool IsIndisposable => true;
 

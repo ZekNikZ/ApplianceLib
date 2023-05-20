@@ -24,6 +24,9 @@ namespace ApplianceLib.Appliances.Blender
         {
             (Locale.English, LocalisationUtils.CreateApplianceInfo("Auto Blender", "Blends ingredients together", new(), new()))
         };
+        public override List<Appliance> Upgrades => new() { 
+            Refs.FastBlender
+        };
         public override List<IApplianceProperty> Properties => new()
         {
             new CItemHolder(),
