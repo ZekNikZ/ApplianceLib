@@ -9,8 +9,8 @@ namespace ApplianceLib.Api
     {
         public enum Automator
         {
-            Portioner = ApplianceReferences.Portioner,
-            Combiner = ApplianceReferences.Combiner
+            Portioner = _ApplianceReferences.Portioner,
+            Combiner = _ApplianceReferences.Combiner
         }
 
         internal static readonly Dictionary<Automator, HashSet<int>> MarkedAppliances = new()

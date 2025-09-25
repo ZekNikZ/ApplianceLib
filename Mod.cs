@@ -21,9 +21,9 @@ namespace ApplianceLib
     {
         public const string MOD_GUID = "io.zkz.plateup.appliancelib";
         public const string MOD_NAME = "ApplianceLib";
-        public const string MOD_VERSION = "0.3.2";
+        public const string MOD_VERSION = "0.3.5";
         public const string MOD_AUTHOR = "ZekNikZ";
-        public const string MOD_GAMEVERSION = ">=1.1.3";
+        public const string MOD_GAMEVERSION = ">=1.3.0";
 
 #if DEBUG
         public const bool DEBUG_MODE = true;
@@ -111,137 +111,137 @@ namespace ApplianceLib
                 // Custom Restricted Items
                 RestrictedTransferKeys.Setup(args.gamedata);
 
-                LogInfo("Updating wash basin.");
-
                 // Update Dishwasher & Wash Basin
                 #region Update Wash Basin
-                var washBasin = Refs.Find<Appliance>(ApplianceReferences.SinkLarge);
-                washBasin.Processes = new()
-                {
-                    new()
-                    {
-                        Process = Refs.Find<Process>(ProcessReferences.Clean)
-                    }
-                };
-                washBasin.Properties = new()
-                {
-                    new CDisplayDuration
-                    {
-                        Process = ProcessReferences.Clean
-                    },
-                    new CTakesDuration
-                    {
-                        Manual = true,
-                        RelevantTool = DurationToolType.Clean,
-                        Mode = InteractionMode.Items,
-                        Total = 5
-                    },
-                    new CFlexibleContainer
-                    {
-                        Maximum = 4
-                    },
-                    new CAppliesProcessToFlexible
-                    {
-                        MinimumItems = 1,
-                        ProcessTimeMultiplier = 2.5f,
-                        MinimumProcessTime = 2,
-                        ProcessType = FlexibleProcessType.Average
-                    },
-                    new CRestrictedReceiver
-                    {
-                        ApplianceKey = RestrictedTransferKeys.Cleanable
-                    },
-                    new CChangeRestrictedReceiverKeyAfterDuration
-                    {
-                        ApplianceKey = RestrictedTransferKeys.CleanedItems
-                    },
-                    new CChangeRestrictedReceiverKeyWhenEmpty
-                    {
-                        ApplianceKey = RestrictedTransferKeys.Cleanable
-                    },
-                    new CCausesSpills
-                    {
-                        ID = ApplianceReferences.MopWater,
-                        Rate = 1,
-                        OverwriteOtherMesses = true
-                    }
-                };
+                //LogInfo("Updating wash basin.");
+                //
+                //var washBasin = Refs.Find<Appliance>(ApplianceReferences.SinkLarge);
+                //washBasin.Processes = new()
+                //{
+                //    new()
+                //    {
+                //        Process = Refs.Find<Process>(ProcessReferences.Clean)
+                //    }
+                //};
+                //washBasin.Properties = new()
+                //{
+                //    new CDisplayDuration
+                //    {
+                //        Process = ProcessReferences.Clean
+                //    },
+                //    new CTakesDuration
+                //    {
+                //        Manual = true,
+                //        RelevantTool = DurationToolType.Clean,
+                //        Mode = InteractionMode.Items,
+                //        Total = 5
+                //    },
+                //    new CFlexibleContainer
+                //    {
+                //        Maximum = 4
+                //    },
+                //    new CAppliesProcessToFlexible
+                //    {
+                //        MinimumItems = 1,
+                //        ProcessTimeMultiplier = 2.5f,
+                //        MinimumProcessTime = 2,
+                //        ProcessType = FlexibleProcessType.Average
+                //    },
+                //    new CRestrictedReceiver
+                //    {
+                //        ApplianceKey = RestrictedTransferKeys.Cleanable
+                //    },
+                //    new CChangeRestrictedReceiverKeyAfterDuration
+                //    {
+                //        ApplianceKey = RestrictedTransferKeys.CleanedItems
+                //    },
+                //    new CChangeRestrictedReceiverKeyWhenEmpty
+                //    {
+                //        ApplianceKey = RestrictedTransferKeys.Cleanable
+                //    },
+                //    new CCausesSpills
+                //    {
+                //        ID = ApplianceReferences.MopWater,
+                //        Rate = 1,
+                //        OverwriteOtherMesses = true
+                //    }
+                //};
 
-                Object.Destroy(washBasin.Prefab.GetComponent<LimitedItemSourceView>());
-                var view = washBasin.Prefab.AddComponent<FlexibleContainerView>();
-                for (int i = 0; i < washBasin.Prefab.GetChildCount(); i++)
-                {
-                    if (washBasin.Prefab.GetChild(i).name.ToLower().Contains("holdpoint"))
-                    {
-                        view.Items.Add(washBasin.Prefab.GetChild(i).gameObject);
-                    }
-                }
+                //Object.Destroy(washBasin.Prefab.GetComponent<LimitedItemSourceView>());
+                //var view = washBasin.Prefab.AddComponent<FlexibleContainerView>();
+                //for (int i = 0; i < washBasin.Prefab.GetChildCount(); i++)
+                //{
+                //    if (washBasin.Prefab.GetChild(i).name.ToLower().Contains("holdpoint"))
+                //    {
+                //        view.Items.Add(washBasin.Prefab.GetChild(i).gameObject);
+                //    }
+                //}
                 #endregion
 
                 #region Update Dishwasher
-                if (ModRegistery.Registered.Any(modPair => modPair.Value.ModID == "IcedMilo.PlateUp.AutomationPlus"))
-                    return;
+                //if (ModRegistery.Registered.Any(modPair => modPair.Value.ModID == "IcedMilo.PlateUp.AutomationPlus"))
+                //    return;
 
-                LogInfo("Updating dishwasher.");
+                //LogInfo("Updating dishwasher.");
 
-                var dishwasher = Refs.Find<Appliance>(ApplianceReferences.DishWasher);
-                dishwasher.Processes = new()
-                {
-                    new()
-                    {
-                        Process = Refs.Find<Process>(ProcessReferences.Clean)
-                    }
-                };
-                dishwasher.Properties = new()
-                {
-                    new CTakesDuration
-                    {
-                        Mode = InteractionMode.Items,
-                        Total = 10
-                    },
-                    new CFlexibleContainer
-                    {
-                        Maximum = 4
-                    },
-                    new CAppliesProcessToFlexible(),
-                    new CRestrictedReceiver
-                    {
-                        ApplianceKey = RestrictedTransferKeys.Cleanable
-                    },
-                    new CChangeRestrictedReceiverKeyAfterDuration
-                    {
-                        ApplianceKey = RestrictedTransferKeys.CleanedItems
-                    },
-                    new CChangeRestrictedReceiverKeyWhenEmpty
-                    {
-                        ApplianceKey = RestrictedTransferKeys.Cleanable
-                    },
-                    new CRequiresActivation(),
-                    new CIsInactive(),
-                    new CLockedWhileDuration(),
-                    new CSetEnabledAfterDuration(),
-                    new CDeactivateAtNight()
-                };
-                var prefab = dishwasher.Prefab;
-                Object.Destroy(prefab.GetComponent<LimitedItemSourceView>());
-                Object.Destroy(prefab.GetComponent<LimitedItemSourceLightsView>());
-                var flexible = prefab.AddComponent<FlexibleColorableContainerView>();
-                var dishwasherChild = prefab.GetChild("DishWasher");
-                var dishes = dishwasherChild.GetChild("Door/Dishes");
-                for (int i = 0; i < dishes.GetChildCount(); i++)
-                {
-                    Object.Destroy(dishes.GetChild(i).GetChild(0));
-                    flexible.Items.Add(dishes.transform.GetChild(i).gameObject);
-                }
-                for (int i = 0; i < dishwasherChild.GetChildCount(); i++)
-                {
-                    var child = dishwasherChild.GetChild(i);
-                    if (!child.name.Contains("Socket") && child.name.Contains("Light"))
-                    {
-                        flexible.Renderers.Add(child.GetComponent<MeshRenderer>());
-                    }
-                }
-                flexible.ProcessID = ProcessReferences.Clean;
+                //var dishwasher = Refs.Find<Appliance>(ApplianceReferences.DishWasher);
+                //dishwasher.Processes = new()
+                //{
+                //    new()
+                //    {
+                //        Process = Refs.Find<Process>(ProcessReferences.Clean)
+                //    }
+                //};
+                //dishwasher.Properties = new()
+                //{
+                //    new CTakesDuration
+                //    {
+                //        Mode = InteractionMode.Items,
+                //        Total = 10
+                //    },
+                //    new CFlexibleContainer
+                //    {
+                //        Maximum = 4
+                //    },
+                //    new CAppliesProcessToFlexible(),
+                //    new CRestrictedReceiver
+                //    {
+                //        ApplianceKey = RestrictedTransferKeys.Cleanable
+                //    },
+                //    new CChangeRestrictedReceiverKeyAfterDuration
+                //    {
+                //        ApplianceKey = RestrictedTransferKeys.CleanedItems
+                //    },
+                //    new CChangeRestrictedReceiverKeyWhenEmpty
+                //    {
+                //        ApplianceKey = RestrictedTransferKeys.Cleanable
+                //    },
+                //    new CRequiresActivation(),
+                //    new CIsInactive(),
+                //    new CLockedWhileDuration(),
+                //    new CSetEnabledAfterDuration(),
+                //    new CDeactivateAtNight()
+                //};
+                //var prefab = dishwasher.Prefab;
+                //Object.Destroy(prefab.GetComponent<LimitedItemSourceView>());
+                //Object.Destroy(prefab.GetComponent<LimitedItemSourceLightsView>());
+                //var flexible = prefab.AddComponent<FlexibleColorableContainerView>();
+                //var dishwasherChild = prefab.GetChild("DishWasher");
+                //var dishes = dishwasherChild.GetChild("Door/Dishes");
+                //for (int i = 0; i < dishes.GetChildCount(); i++)
+                //{
+                //    Object.Destroy(dishes.GetChild(i).GetChild(0));
+                //    flexible.Items.Add(dishes.transform.GetChild(i).gameObject);
+                //}
+                //for (int i = 0; i < dishwasherChild.GetChildCount(); i++)
+                //{
+                //    var child = dishwasherChild.GetChild(i);
+                //    if (!child.name.Contains("Socket") && child.name.Contains("Light"))
+                //    {
+                //        flexible.Renderers.Add(child.GetComponent<MeshRenderer>());
+                //    }
+                //}
+                //flexible.ProcessID = ProcessReferences.Clean;
                 #endregion
             };
             Events.BuildGameDataEvent += ApplianceGroups.BuildGameDataEventCallback;

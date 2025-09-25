@@ -58,7 +58,8 @@ namespace ApplianceLib.Api
                     ApplianceReferences.Countertop,
                     ApplianceReferences.Workstation,
                     ApplianceReferences.TrayStand,
-                    ApplianceReferences.SourceOil
+                    ApplianceReferences.SourceOil,
+                    ApplianceReferences.SourceCakeStand
                 )
             },
             {

@@ -19,9 +19,9 @@ namespace ApplianceLib.Customs
         }
 
         static bool Prefix(Entity e, ref CConveyCooldown cooldown, ref CConveyPushItems push, ref CItemHolder held, in CPosition pos,
-            ref EntityContext ___ctx, ref EntityCommandBuffer ___ecb, float ___speed, float ___dt, ref bool ___has_performed_action)
+            ref EntityContext ___ctx, ref EntityCommandBuffer ___ecb, float ___speed, float ___dt) // , ref bool ___has_performed_action
         {
-            if (___has_performed_action || !push.Push || push.State == CConveyPushItems.ConveyState.Grab)
+            if (/* ___has_performed_action || */ !push.Push || push.State == CConveyPushItems.ConveyState.Grab)
                 return true;
 
             if (cooldown.Remaining > 0f || !___ctx.Require(held.HeldItem, out CItem itemComp))
@@ -70,7 +70,7 @@ namespace ApplianceLib.Customs
                             ___ctx.Destroy(held.HeldItem);
                             held.HeldItem = default(Entity);
 
-                            ___has_performed_action = true;
+                            //___has_performed_action = true;
                             push.Progress = 0;
                             cooldown.Remaining = cooldown.Total;
                             push.State = CConveyPushItems.ConveyState.None;
