@@ -9,7 +9,8 @@ using UnityEngine;
 
 namespace ApplianceLib.Customs
 {
-    [HarmonyPatch]
+    // TEMPORARILY DISABLED
+    //[HarmonyPatch]
     internal class ConveyorPushPatch
     {
         static MethodBase TargetMethod()
