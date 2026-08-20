@@ -21,9 +21,9 @@ namespace ApplianceLib
     {
         public const string MOD_GUID = "io.zkz.plateup.appliancelib";
         public const string MOD_NAME = "ApplianceLib";
-        public const string MOD_VERSION = "0.3.6";
+        public const string MOD_VERSION = "0.3.7";
         public const string MOD_AUTHOR = "ZekNikZ";
-        public const string MOD_GAMEVERSION = ">=1.3.0";
+        public const string MOD_GAMEVERSION = ">=1.4.4";
 
 #if DEBUG
         public const bool DEBUG_MODE = true;
